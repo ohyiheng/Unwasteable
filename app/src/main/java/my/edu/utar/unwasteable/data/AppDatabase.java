@@ -11,9 +11,8 @@ import androidx.room.RoomDatabase;
         Category.class,
         Location.class,
         Item.class,
-        Product.class,
     },
-    version = 1
+    version = 2
 )
 public abstract class AppDatabase extends RoomDatabase {
     private static volatile AppDatabase Instance;
@@ -27,7 +26,8 @@ public abstract class AppDatabase extends RoomDatabase {
                     context.getApplicationContext(),
                     AppDatabase.class,
                     "unwasteable_app_db"
-                ).build();
+                ).fallbackToDestructiveMigration(true)
+                    .build();
             }
             return Instance;
         }
@@ -36,5 +36,4 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract CategoryDao categoryDao();
     public abstract LocationDao locationDao();
     public abstract ItemDao itemDao();
-    public abstract ProductDao productDao();
 }

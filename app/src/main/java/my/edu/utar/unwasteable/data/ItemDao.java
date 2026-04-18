@@ -20,8 +20,8 @@ public interface ItemDao {
     @Query("SELECT * FROM items WHERE id = :id")
     Item getItemById(int id);
 
-    @Query("SELECT * FROM items WHERE product_id = :productId")
-    List<Item> getItemsByProductId(int productId);
+    @Query("SELECT * FROM items WHERE category_id = :categoryId")
+    List<Item> getItemsByCategoryId(int categoryId);
 
     @Query("SELECT * FROM items WHERE location_id = :locationId")
     List<Item> getItemsByLocationId(int locationId);

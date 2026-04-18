@@ -33,7 +33,10 @@ android {
 }
 
 dependencies {
+    implementation libs.coordinatorlayout
+    implementation libs.fragment
     def room_version = "2.8.4"
+    def nav_version = "2.9.7"
 
     implementation "androidx.room:room-runtime:$room_version"
 
@@ -48,9 +51,8 @@ dependencies {
     testImplementation "androidx.room:room-testing:$room_version"
 
 
-    def fragment_version = "1.8.9"
-    implementation "androidx.fragment:fragment:$fragment_version"
-
+    implementation "androidx.navigation:navigation-fragment:$nav_version"
+    implementation "androidx.navigation:navigation-ui:$nav_version"
 
     implementation libs.appcompat
     implementation libs.material

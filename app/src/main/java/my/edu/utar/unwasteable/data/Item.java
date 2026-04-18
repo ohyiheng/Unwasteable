@@ -10,10 +10,10 @@ import androidx.room.PrimaryKey;
     tableName = "items",
     foreignKeys = {
         @ForeignKey(
-            entity = Product.class,
+            entity = Category.class,
             parentColumns = "id",
-            childColumns = "product_id",
-            onDelete = ForeignKey.CASCADE
+            childColumns = "category_id",
+            onDelete = ForeignKey.SET_NULL
         ),
         @ForeignKey(
             entity = Location.class,
@@ -22,24 +22,22 @@ import androidx.room.PrimaryKey;
             onDelete = ForeignKey.SET_NULL
         )
     },
-    indices = {@Index("product_id"), @Index("location_id")}
+    indices = {@Index("category_id"), @Index("location_id")}
 )
 public class Item {
     @PrimaryKey(autoGenerate = true)
     public int id;
 
-    @ColumnInfo(name = "product_id")
-    public int productId;
+    public String name;
 
     @ColumnInfo(name = "location_id")
-    public int locationId;
+    public Integer locationId;
+
+    @ColumnInfo(name = "category_id")
+    public Integer categoryId;
+
     public double quantity;
 
     @ColumnInfo(name = "expiry_date")
     public String expiryDate;
-
-    @ColumnInfo(name = "opened_date")
-    public String openedDate;
-
-    public String status;
 }
