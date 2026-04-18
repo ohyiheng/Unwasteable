@@ -1,10 +1,14 @@
 package my.edu.utar.unwasteable.data;
 
 import androidx.room.ColumnInfo;
+import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
+import androidx.room.Relation;
+
+import java.util.List;
 
 @Entity(
     tableName = "products",
@@ -29,3 +33,4 @@ public class Product {
     @ColumnInfo(name = "default_unit")
     public String defaultUnit;
 }
+

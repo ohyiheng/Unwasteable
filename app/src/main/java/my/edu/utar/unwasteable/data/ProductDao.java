@@ -5,6 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Transaction;
 import androidx.room.Update;
 
 import java.util.List;
@@ -12,10 +13,14 @@ import java.util.List;
 @Dao
 public interface ProductDao {
     @Query("SELECT * FROM products")
-    LiveData<List<Product>> getAll();
+    LiveData<List<Product>> getProducts();
 
     @Query("SELECT * FROM products WHERE id = :id")
     LiveData<Product> getById(int id);
+
+    @Transaction
+    @Query("SELECT * FROM products")
+    LiveData<List<ProductWithItems>> getProductsWithItems();
 
     @Insert
     void insert(Product product);
