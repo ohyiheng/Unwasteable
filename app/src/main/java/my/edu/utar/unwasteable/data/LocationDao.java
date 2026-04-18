@@ -1,5 +1,6 @@
 package my.edu.utar.unwasteable.data;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -14,10 +15,10 @@ public interface LocationDao {
     void insert(Location location);
 
     @Query("SELECT * FROM locations")
-    List<Location> getAllLocations();
+    LiveData<List<Location>> getAllLocations();
 
     @Query("SELECT * FROM locations WHERE id = :id")
-    Location getLocationById(int id);
+    LiveData<Location> getLocationById(int id);
 
     @Update
     void update(Location location);

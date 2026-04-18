@@ -1,5 +1,6 @@
 package my.edu.utar.unwasteable.data;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -14,7 +15,7 @@ public interface ItemDao {
     void insert(Item item);
 
     @Query("SELECT * FROM items")
-    List<Item> getAllItems();
+    LiveData<List<Item>> getItems();
 
     @Query("SELECT * FROM items WHERE id = :id")
     Item getItemById(int id);

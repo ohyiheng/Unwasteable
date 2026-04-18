@@ -1,5 +1,6 @@
 package my.edu.utar.unwasteable.data;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -14,10 +15,10 @@ public interface CategoryDao {
     void insert(Category category);
 
     @Query("SELECT * FROM categories")
-    List<Category> getAllCategories();
+    LiveData<List<Category>> getAllCategories();
 
     @Query("SELECT * FROM categories WHERE id = :id")
-    Category getCategoryById(int id);
+    LiveData<Category> getCategoryById(int id);
 
     @Update
     void update(Category category);
