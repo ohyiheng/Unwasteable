@@ -35,6 +35,7 @@ android {
 dependencies {
     implementation libs.coordinatorlayout
     implementation libs.fragment
+    implementation libs.viewpager2
     def room_version = "2.8.4"
     def nav_version = "2.9.7"
 

@@ -12,10 +12,10 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/item_add"
-        android:name="my.edu.utar.unwasteable.ui.ItemAddFragment"
+        android:id="@+id/add"
+        android:name="my.edu.utar.unwasteable.ui.AddFragment"
         android:label="Add item"
-        tools:layout="@layout/fragment_item_add" />
+        tools:layout="@layout/fragment_add" />
 
     <fragment
         android:id="@+id/item_list"
