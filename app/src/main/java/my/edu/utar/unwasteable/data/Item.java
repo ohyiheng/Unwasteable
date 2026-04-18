@@ -6,6 +6,8 @@ import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import java.time.LocalDate;
+
 @Entity(
     tableName = "items",
     foreignKeys = {
@@ -39,5 +41,5 @@ public class Item {
     public double quantity;
 
     @ColumnInfo(name = "expiry_date")
-    public String expiryDate;
+    public LocalDate expiryDate;
 }
