@@ -1,5 +1,25 @@
 <resources>
     <string name="app_name">Unwasteable</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="nav_home">Home</string>
+    <string name="nav_add">Add</string>
+    <string name="nav_pantry">Pantry</string>
+
+    <string name="home_title">Welcome to Unwasteable</string>
+    <string name="home_subtitle">Organise pantry items and reduce food waste.</string>
+
+    <string name="pantry_title">Pantry</string>
+    <string name="pantry_subtitle">Track the food items you have stored.</string>
+
+    <string name="add_title">Add Data</string>
+    <string name="add_subtitle">Create pantry records, storage locations, and categories.</string>
+
+    <string name="item_form_title">New Item</string>
+    <string name="item_form_subtitle">Fill in the item details below.</string>
+    <string name="location_form_title">New Location</string>
+    <string name="category_form_title">New Category</string>
+
+    <string name="save_item">Save Item</string>
+    <string name="save_location">Save Location</string>
+    <string name="save_category">Save Category</string>
 </resources>

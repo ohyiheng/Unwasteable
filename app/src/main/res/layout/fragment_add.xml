@@ -3,19 +3,52 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:background="@color/background_main"
+    android:paddingStart="20dp"
+    android:paddingTop="20dp"
+    android:paddingEnd="20dp"
+    android:paddingBottom="0dp">
+
+    <TextView
+        android:id="@+id/tvAddTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Data"
+        android:textColor="@color/text_primary"
+        android:textSize="26sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvAddSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="Create pantry records, storage locations, and categories."
+        android:textColor="@color/text_secondary"
+        android:textSize="14sp" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/add_tab_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:background="@color/surface_soft"
+        android:padding="6dp"
+        app:tabBackground="@drawable/bg_add_tab"
+        app:tabGravity="fill"
+        app:tabIndicator="@null"
+        app:tabInlineLabel="true"
+        app:tabMode="fixed"
+        app:tabRippleColor="@color/green_soft"
+        app:tabSelectedTextColor="@color/green_primary_dark"
+        app:tabTextColor="@color/text_secondary" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/add_pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="14dp"
         android:layout_weight="1" />
 
 </LinearLayout>

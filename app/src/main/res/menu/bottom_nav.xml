@@ -5,16 +5,18 @@
     <item
         android:id="@+id/home"
         android:icon="@drawable/ic_home_24"
-        android:title="Home"
+        android:title="@string/nav_home"
         app:showAsAction="ifRoom" />
+
     <item
         android:id="@+id/add"
         android:icon="@drawable/ic_add_24"
-        android:title="Add"
+        android:title="@string/nav_add"
         app:showAsAction="ifRoom" />
+
     <item
         android:id="@+id/item_list"
         android:icon="@drawable/ic_chef_hat_24"
-        android:title="Pantry"
+        android:title="@string/nav_pantry"
         app:showAsAction="ifRoom" />
 </menu>
