@@ -49,10 +49,21 @@
                 tools:text="@string/badge_fresh" />
 
             <ImageButton
-                android:id="@+id/buttonDeleteItem"
+                android:id="@+id/buttonEditItem"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="4dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/edit_item"
+                android:padding="8dp"
+                android:src="@drawable/ic_edit_24"
+                android:tint="@color/green_primary_dark" />
+
+            <ImageButton
+                android:id="@+id/buttonDeleteItem"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="2dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/delete_item"
                 android:padding="8dp"

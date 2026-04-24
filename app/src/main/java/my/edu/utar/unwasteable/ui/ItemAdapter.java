@@ -21,6 +21,7 @@ import my.edu.utar.unwasteable.data.Item;
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
     public interface OnItemActionListener {
+        void onEdit(Item item);
         void onDelete(Item item);
     }
 
@@ -36,6 +37,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         private final TextView tvItemQuantity;
         private final TextView tvItemExpiry;
         private final TextView tvItemBadge;
+        private final ImageButton buttonEditItem;
         private final ImageButton buttonDeleteItem;
 
         public ViewHolder(@NonNull View itemView) {
@@ -44,6 +46,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             tvItemQuantity = itemView.findViewById(R.id.tvItemQuantity);
             tvItemExpiry = itemView.findViewById(R.id.tvItemExpiry);
             tvItemBadge = itemView.findViewById(R.id.tvItemBadge);
+            buttonEditItem = itemView.findViewById(R.id.buttonEditItem);
             buttonDeleteItem = itemView.findViewById(R.id.buttonDeleteItem);
         }
     }
@@ -75,6 +78,12 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         }
 
         bindBadge(holder.tvItemBadge, currentItem.expiryDate);
+
+        holder.buttonEditItem.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onEdit(currentItem);
+            }
+        });
 
         holder.buttonDeleteItem.setOnClickListener(v -> {
             if (listener != null) {
