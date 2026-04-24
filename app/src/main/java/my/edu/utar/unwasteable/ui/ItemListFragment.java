@@ -8,11 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -20,18 +18,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.chip.Chip;
-import com.google.android.material.datepicker.MaterialDatePicker;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.TimeZone;
 
 import my.edu.utar.unwasteable.R;
 import my.edu.utar.unwasteable.data.Item;
@@ -92,18 +84,7 @@ public class ItemListFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
 
-        itemAdapter = new ItemAdapter(new ItemAdapter.OnItemActionListener() {
-            @Override
-            public void onEdit(Item item) {
-                showEditItemDialog(item);
-            }
-
-            @Override
-            public void onDelete(Item item) {
-                showDeleteConfirmation(item);
-            }
-        });
-
+        itemAdapter = new ItemAdapter();
         recyclerView.setAdapter(itemAdapter);
     }
 
@@ -292,164 +273,5 @@ public class ItemListFragment extends Fragment {
         tvEmptyStateTitle.setText(R.string.pantry_no_result_title);
         tvEmptyStateBody.setText(R.string.pantry_no_result_body);
         buttonAddFirstItem.setVisibility(View.GONE);
-    }
-
-    private void showEditItemDialog(Item item) {
-        if (item == null) {
-            return;
-        }
-
-        View dialogView = LayoutInflater.from(requireContext())
-                .inflate(R.layout.dialog_edit_item, null, false);
-
-        TextInputEditText editName = dialogView.findViewById(R.id.edit_item_name);
-        TextInputEditText editQuantity = dialogView.findViewById(R.id.edit_item_quantity);
-        TextInputEditText editExpiryDate = dialogView.findViewById(R.id.edit_item_expiry_date);
-
-        editName.setText(item.name == null ? "" : item.name);
-        editQuantity.setText(formatQuantityForEdit(item.quantity));
-
-        if (item.expiryDate != null) {
-            editExpiryDate.setText(item.expiryDate.toString());
-        } else {
-            editExpiryDate.setText("");
-        }
-
-        editExpiryDate.setOnClickListener(v -> showDatePicker(editExpiryDate));
-
-        AlertDialog dialog = new MaterialAlertDialogBuilder(requireContext())
-                .setTitle(R.string.edit_item_title)
-                .setView(dialogView)
-                .setNegativeButton(R.string.cancel, null)
-                .setPositiveButton(R.string.update, null)
-                .create();
-
-        dialog.setOnShowListener(dialogInterface ->
-                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
-                    boolean updated = updateItemFromDialog(item, editName, editQuantity, editExpiryDate);
-
-                    if (updated) {
-                        dialog.dismiss();
-                    }
-                })
-        );
-
-        dialog.show();
-    }
-
-    private boolean updateItemFromDialog(
-            Item item,
-            TextInputEditText editName,
-            TextInputEditText editQuantity,
-            TextInputEditText editExpiryDate
-    ) {
-        editName.setError(null);
-        editQuantity.setError(null);
-        editExpiryDate.setError(null);
-
-        String name = editName.getText() != null
-                ? editName.getText().toString().trim()
-                : "";
-
-        String quantityText = editQuantity.getText() != null
-                ? editQuantity.getText().toString().trim()
-                : "";
-
-        String expiryText = editExpiryDate.getText() != null
-                ? editExpiryDate.getText().toString().trim()
-                : "";
-
-        if (name.isEmpty()) {
-            editName.setError(getString(R.string.error_item_name_required));
-            editName.requestFocus();
-            return false;
-        }
-
-        if (quantityText.isEmpty()) {
-            editQuantity.setError(getString(R.string.error_quantity_required));
-            editQuantity.requestFocus();
-            return false;
-        }
-
-        double quantity;
-
-        try {
-            quantity = Double.parseDouble(quantityText);
-        } catch (NumberFormatException e) {
-            editQuantity.setError(getString(R.string.error_invalid_quantity));
-            editQuantity.requestFocus();
-            return false;
-        }
-
-        if (quantity <= 0) {
-            editQuantity.setError(getString(R.string.error_quantity_positive));
-            editQuantity.requestFocus();
-            return false;
-        }
-
-        LocalDate expiryDate = null;
-
-        if (!expiryText.isEmpty()) {
-            try {
-                expiryDate = LocalDate.parse(expiryText);
-            } catch (DateTimeParseException e) {
-                editExpiryDate.setError(getString(R.string.error_invalid_date_format));
-                editExpiryDate.requestFocus();
-                return false;
-            }
-        }
-
-        item.name = name;
-        item.quantity = quantity;
-        item.expiryDate = expiryDate;
-
-        itemViewModel.update(item);
-        Toast.makeText(getContext(), R.string.item_updated, Toast.LENGTH_SHORT).show();
-
-        return true;
-    }
-
-    private void showDatePicker(TextInputEditText targetEditText) {
-        MaterialDatePicker<Long> datePicker = MaterialDatePicker.Builder.datePicker()
-                .setTitleText(getString(R.string.expiry_date_hint))
-                .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
-                .build();
-
-        datePicker.show(getParentFragmentManager(), "EDIT_ITEM_DATE_PICKER");
-
-        datePicker.addOnPositiveButtonClickListener(selection -> {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-            dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-
-            String formattedDate = dateFormat.format(new Date(selection));
-            targetEditText.setText(formattedDate);
-            targetEditText.setError(null);
-        });
-
-        datePicker.addOnDismissListener(dialog -> targetEditText.clearFocus());
-    }
-
-    private void showDeleteConfirmation(Item item) {
-        if (item == null) {
-            return;
-        }
-
-        new MaterialAlertDialogBuilder(requireContext())
-                .setTitle(R.string.delete_item_title)
-                .setMessage(R.string.delete_item_message)
-                .setNegativeButton(R.string.cancel, null)
-                .setPositiveButton(R.string.delete, (dialog, which) -> {
-                    itemViewModel.delete(item);
-                    Toast.makeText(getContext(), R.string.item_deleted, Toast.LENGTH_SHORT).show();
-                })
-                .show();
-    }
-
-    private String formatQuantityForEdit(double quantity) {
-        if (quantity == (int) quantity) {
-            return String.valueOf((int) quantity);
-        }
-
-        return String.valueOf(quantity);
     }
 }

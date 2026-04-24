@@ -93,26 +93,4 @@
         <item quantity="one">%1$d item is expired. Review it before use.</item>
         <item quantity="other">%1$d items are expired. Review them before use.</item>
     </plurals>
-
-    <string name="delete_item">Delete item</string>
-    <string name="delete_item_title">Delete item?</string>
-    <string name="delete_item_message">This item will be removed from your pantry.</string>
-    <string name="delete">Delete</string>
-    <string name="cancel">Cancel</string>
-    <string name="item_deleted">Item deleted</string>
-
-    <string name="edit_item">Edit item</string>
-    <string name="edit_item_title">Edit item</string>
-    <string name="update">Update</string>
-    <string name="item_updated">Item updated</string>
-
-    <string name="item_name_hint">Item Name</string>
-    <string name="quantity_hint">Quantity</string>
-    <string name="expiry_date_hint">Expiry Date</string>
-
-    <string name="error_item_name_required">Item name is required</string>
-    <string name="error_quantity_required">Quantity is required</string>
-    <string name="error_invalid_quantity">Enter a valid quantity</string>
-    <string name="error_quantity_positive">Quantity must be greater than 0</string>
-    <string name="error_invalid_date_format">Use date format yyyy-MM-dd</string>
 </resources>
