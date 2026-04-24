@@ -14,11 +14,11 @@
     <string name="home_summary_items_title">Pantry Items</string>
     <string name="home_summary_items_subtitle">Track stored items</string>
 
-    <string name="home_summary_categories_title">Categories</string>
-    <string name="home_summary_categories_subtitle">Manage food types</string>
-
     <string name="home_summary_add_title">Add</string>
     <string name="home_summary_add_subtitle">Create new records</string>
+
+    <string name="home_summary_categories_title">Categories</string>
+    <string name="home_summary_categories_subtitle">Manage food types</string>
 
     <string name="home_summary_locations_title">Locations</string>
     <string name="home_summary_locations_subtitle">Set storage places</string>
@@ -28,8 +28,10 @@
 
     <string name="item_form_title">New Item</string>
     <string name="item_form_subtitle">Enter basic pantry information below.</string>
+
     <string name="location_form_title">New Location</string>
     <string name="location_form_subtitle">Add a storage place such as fridge, freezer, or pantry shelf.</string>
+
     <string name="category_form_title">New Category</string>
     <string name="category_form_subtitle">Organise pantry items into useful food groups.</string>
 
