@@ -47,4 +47,16 @@
     <string name="badge_soon">Soon</string>
     <string name="badge_expired">Expired</string>
     <string name="badge_unknown">Unknown</string>
+
+    <string name="pantry_title">Pantry</string>
+    <string name="pantry_subtitle">Track the food items you have stored.</string>
+    <string name="pantry_count_default">0 items</string>
+    <string name="pantry_empty_title">No pantry items yet</string>
+    <string name="pantry_empty_body">Start by adding your first food item so Unwasteable can help you track quantities and expiry dates.</string>
+    <string name="pantry_empty_button">Add First Item</string>
+
+    <plurals name="pantry_item_count">
+        <item quantity="one">%1$d item</item>
+        <item quantity="other">%1$d items</item>
+    </plurals>
 </resources>
