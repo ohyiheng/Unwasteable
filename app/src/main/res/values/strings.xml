@@ -51,9 +51,22 @@
     <string name="pantry_title">Pantry</string>
     <string name="pantry_subtitle">Track the food items you have stored.</string>
     <string name="pantry_count_default">0 items</string>
+    <string name="pantry_filtered_count">%1$d of %2$d items</string>
+
+    <string name="pantry_search_hint">Search pantry items</string>
+
+    <string name="pantry_filter_all">All</string>
+    <string name="pantry_filter_fresh">Fresh</string>
+    <string name="pantry_filter_soon">Soon</string>
+    <string name="pantry_filter_expired">Expired</string>
+    <string name="pantry_filter_unknown">Unknown</string>
+
     <string name="pantry_empty_title">No pantry items yet</string>
     <string name="pantry_empty_body">Start by adding your first food item so Unwasteable can help you track quantities and expiry dates.</string>
     <string name="pantry_empty_button">Add First Item</string>
+
+    <string name="pantry_no_result_title">No matching items</string>
+    <string name="pantry_no_result_body">Try changing the search keyword or selecting another status filter.</string>
 
     <plurals name="pantry_item_count">
         <item quantity="one">%1$d item</item>
