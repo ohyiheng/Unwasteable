@@ -25,7 +25,11 @@ public class CategoryAddFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(
+            @NonNull LayoutInflater inflater,
+            @Nullable ViewGroup container,
+            @Nullable Bundle savedInstanceState
+    ) {
         View view = inflater.inflate(R.layout.fragment_category_add, container, false);
 
         categoryViewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
@@ -38,10 +42,15 @@ public class CategoryAddFragment extends Fragment {
     }
 
     private void saveCategory() {
-        String name = editCategoryName.getText() != null ? editCategoryName.getText().toString().trim() : "";
+        editCategoryName.setError(null);
+
+        String name = editCategoryName.getText() != null
+                ? editCategoryName.getText().toString().trim()
+                : "";
 
         if (name.isEmpty()) {
-            Toast.makeText(getContext(), "Please enter a category name", Toast.LENGTH_SHORT).show();
+            editCategoryName.setError("Category name is required");
+            editCategoryName.requestFocus();
             return;
         }
 
@@ -49,9 +58,14 @@ public class CategoryAddFragment extends Fragment {
         category.name = name;
 
         categoryViewModel.insert(category);
-        Toast.makeText(getContext(), "Category saved", Toast.LENGTH_SHORT).show();
 
-        // Clear input
+        Toast.makeText(requireContext(), "Category saved", Toast.LENGTH_SHORT).show();
+        clearForm();
+    }
+
+    private void clearForm() {
         editCategoryName.setText("");
+        editCategoryName.setError(null);
+        editCategoryName.requestFocus();
     }
 }

@@ -25,7 +25,11 @@ public class LocationAddFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(
+            @NonNull LayoutInflater inflater,
+            @Nullable ViewGroup container,
+            @Nullable Bundle savedInstanceState
+    ) {
         View view = inflater.inflate(R.layout.fragment_location_add, container, false);
 
         locationViewModel = new ViewModelProvider(this).get(LocationViewModel.class);
@@ -38,10 +42,15 @@ public class LocationAddFragment extends Fragment {
     }
 
     private void saveLocation() {
-        String name = editLocationName.getText() != null ? editLocationName.getText().toString().trim() : "";
+        editLocationName.setError(null);
+
+        String name = editLocationName.getText() != null
+                ? editLocationName.getText().toString().trim()
+                : "";
 
         if (name.isEmpty()) {
-            Toast.makeText(getContext(), "Please enter a location name", Toast.LENGTH_SHORT).show();
+            editLocationName.setError("Location name is required");
+            editLocationName.requestFocus();
             return;
         }
 
@@ -49,9 +58,14 @@ public class LocationAddFragment extends Fragment {
         location.name = name;
 
         locationViewModel.insert(location);
-        Toast.makeText(getContext(), "Location saved", Toast.LENGTH_SHORT).show();
-        
-        // Clear input
+
+        Toast.makeText(requireContext(), "Location saved", Toast.LENGTH_SHORT).show();
+        clearForm();
+    }
+
+    private void clearForm() {
         editLocationName.setText("");
+        editLocationName.setError(null);
+        editLocationName.requestFocus();
     }
 }
