@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.chip.Chip;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.time.LocalDate;
@@ -84,7 +86,7 @@ public class ItemListFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
 
-        itemAdapter = new ItemAdapter();
+        itemAdapter = new ItemAdapter(this::showDeleteConfirmation);
         recyclerView.setAdapter(itemAdapter);
     }
 
@@ -273,5 +275,21 @@ public class ItemListFragment extends Fragment {
         tvEmptyStateTitle.setText(R.string.pantry_no_result_title);
         tvEmptyStateBody.setText(R.string.pantry_no_result_body);
         buttonAddFirstItem.setVisibility(View.GONE);
+    }
+
+    private void showDeleteConfirmation(Item item) {
+        if (item == null) {
+            return;
+        }
+
+        new MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.delete_item_title)
+                .setMessage(R.string.delete_item_message)
+                .setNegativeButton(R.string.cancel, null)
+                .setPositiveButton(R.string.delete, (dialog, which) -> {
+                    itemViewModel.delete(item);
+                    Toast.makeText(getContext(), R.string.item_deleted, Toast.LENGTH_SHORT).show();
+                })
+                .show();
     }
 }
