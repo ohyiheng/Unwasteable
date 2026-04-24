@@ -23,18 +23,12 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import my.edu.utar.unwasteable.R;
-import my.edu.utar.unwasteable.data.Category;
 import my.edu.utar.unwasteable.data.Item;
-import my.edu.utar.unwasteable.data.Location;
-import my.edu.utar.unwasteable.viewmodel.CategoryViewModel;
 import my.edu.utar.unwasteable.viewmodel.ItemViewModel;
-import my.edu.utar.unwasteable.viewmodel.LocationViewModel;
 
 public class AddFragment extends Fragment {
 
     private ItemViewModel itemViewModel;
-    private LocationViewModel locationViewModel;
-    private CategoryViewModel categoryViewModel;
 
     private TextInputEditText editName;
     private TextInputEditText editQuantity;
@@ -60,8 +54,6 @@ public class AddFragment extends Fragment {
 
     private void setupViewModels() {
         itemViewModel = new ViewModelProvider(this).get(ItemViewModel.class);
-        locationViewModel = new ViewModelProvider(this).get(LocationViewModel.class);
-        categoryViewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
     }
 
     private void bindViews(View view) {
@@ -76,7 +68,7 @@ public class AddFragment extends Fragment {
         editExpiryDate.setOnClickListener(v -> showDatePicker(editExpiryDate));
 
         Button buttonSave = view.findViewById(R.id.button_save);
-        buttonSave.setOnClickListener(v -> saveEnteredDetails());
+        buttonSave.setOnClickListener(v -> saveItem());
     }
 
     private void showDatePicker(TextInputEditText targetEditText) {
@@ -99,78 +91,23 @@ public class AddFragment extends Fragment {
         datePicker.addOnDismissListener(dialog -> targetEditText.clearFocus());
     }
 
-    private void saveEnteredDetails() {
+    private void saveItem() {
         clearAllErrors();
 
         String itemName = getText(editName);
         String quantityText = getText(editQuantity);
         String expiryText = getText(editExpiryDate);
-        String locationName = getText(editLocationName);
-        String categoryName = getText(editCategoryName);
 
-        boolean hasItemInput = !itemName.isEmpty() || !quantityText.isEmpty();
-        boolean hasOnlyExpiryDateForItem = !expiryText.isEmpty() && !hasItemInput;
-        boolean hasLocationInput = !locationName.isEmpty();
-        boolean hasCategoryInput = !categoryName.isEmpty();
+        Item itemToSave = buildItemOrShowError(itemName, quantityText, expiryText);
 
-        if (!hasItemInput && !hasLocationInput && !hasCategoryInput) {
-            editName.setError(getString(R.string.error_enter_one_detail));
-            editName.requestFocus();
+        if (itemToSave == null) {
             return;
         }
 
-        if (hasOnlyExpiryDateForItem && !hasLocationInput && !hasCategoryInput) {
-            editName.setError(getString(R.string.error_item_name_required));
-            editName.requestFocus();
-            return;
-        }
+        itemViewModel.insert(itemToSave);
+        clearSavedFields();
 
-        Item itemToSave = null;
-
-        if (hasItemInput) {
-            itemToSave = buildItemOrShowError(itemName, quantityText, expiryText);
-
-            if (itemToSave == null) {
-                return;
-            }
-        }
-
-        Location locationToSave = null;
-        if (hasLocationInput) {
-            locationToSave = new Location();
-            locationToSave.name = locationName;
-        }
-
-        Category categoryToSave = null;
-        if (hasCategoryInput) {
-            categoryToSave = new Category();
-            categoryToSave.name = categoryName;
-        }
-
-        int savedCount = 0;
-
-        if (itemToSave != null) {
-            itemViewModel.insert(itemToSave);
-            savedCount++;
-        }
-
-        if (locationToSave != null) {
-            locationViewModel.insert(locationToSave);
-            savedCount++;
-        }
-
-        if (categoryToSave != null) {
-            categoryViewModel.insert(categoryToSave);
-            savedCount++;
-        }
-
-        clearSavedFields(itemToSave != null, locationToSave != null, categoryToSave != null);
-
-        int toastMessage = savedCount == 1
-                ? R.string.toast_detail_saved
-                : R.string.toast_details_saved;
-
-        Toast.makeText(requireContext(), toastMessage, Toast.LENGTH_SHORT).show();
+        Toast.makeText(requireContext(), R.string.toast_detail_saved, Toast.LENGTH_SHORT).show();
     }
 
     private Item buildItemOrShowError(String name, String quantityText, String expiryText) {
@@ -236,20 +173,12 @@ public class AddFragment extends Fragment {
         editCategoryName.setError(null);
     }
 
-    private void clearSavedFields(boolean itemSaved, boolean locationSaved, boolean categorySaved) {
-        if (itemSaved) {
-            editName.setText("");
-            editQuantity.setText("");
-            editExpiryDate.setText("");
-        }
-
-        if (locationSaved) {
-            editLocationName.setText("");
-        }
-
-        if (categorySaved) {
-            editCategoryName.setText("");
-        }
+    private void clearSavedFields() {
+        editName.setText("");
+        editQuantity.setText("");
+        editExpiryDate.setText("");
+        editLocationName.setText("");
+        editCategoryName.setText("");
 
         clearAllErrors();
         editName.requestFocus();
