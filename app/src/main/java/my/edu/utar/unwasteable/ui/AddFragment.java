@@ -116,7 +116,7 @@ public class AddFragment extends Fragment {
         boolean hasCategoryInput = !categoryName.isEmpty();
 
         if (!hasItemInput && !hasLocationInput && !hasCategoryInput) {
-            editName.setError("Enter at least one detail");
+            editName.setError(getString(R.string.error_enter_one_detail));
             editName.requestFocus();
             return;
         }
@@ -162,11 +162,11 @@ public class AddFragment extends Fragment {
 
         clearSavedFields(itemToSave != null, locationToSave != null, categoryToSave != null);
 
-        Toast.makeText(
-                requireContext(),
-                savedCount == 1 ? "Detail saved" : "Details saved",
-                Toast.LENGTH_SHORT
-        ).show();
+        int toastMessage = savedCount == 1
+                ? R.string.toast_detail_saved
+                : R.string.toast_details_saved;
+
+        Toast.makeText(requireContext(), toastMessage, Toast.LENGTH_SHORT).show();
     }
 
     private Item buildItemOrShowError(String name, String quantityText, String expiryText) {
