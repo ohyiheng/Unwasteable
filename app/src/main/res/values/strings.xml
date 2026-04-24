@@ -93,4 +93,11 @@
         <item quantity="one">%1$d item is expired. Review it before use.</item>
         <item quantity="other">%1$d items are expired. Review them before use.</item>
     </plurals>
+
+    <string name="delete_item">Delete item</string>
+    <string name="delete_item_title">Delete item?</string>
+    <string name="delete_item_message">This item will be removed from your pantry.</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="item_deleted">Item deleted</string>
 </resources>

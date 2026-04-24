@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,13 +20,23 @@ import my.edu.utar.unwasteable.data.Item;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
+    public interface OnItemActionListener {
+        void onDelete(Item item);
+    }
+
     private List<Item> localItems = new ArrayList<>();
+    private final OnItemActionListener listener;
+
+    public ItemAdapter(OnItemActionListener listener) {
+        this.listener = listener;
+    }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView tvItemName;
         private final TextView tvItemQuantity;
         private final TextView tvItemExpiry;
         private final TextView tvItemBadge;
+        private final ImageButton buttonDeleteItem;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -33,6 +44,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             tvItemQuantity = itemView.findViewById(R.id.tvItemQuantity);
             tvItemExpiry = itemView.findViewById(R.id.tvItemExpiry);
             tvItemBadge = itemView.findViewById(R.id.tvItemBadge);
+            buttonDeleteItem = itemView.findViewById(R.id.buttonDeleteItem);
         }
     }
 
@@ -63,6 +75,12 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         }
 
         bindBadge(holder.tvItemBadge, currentItem.expiryDate);
+
+        holder.buttonDeleteItem.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onDelete(currentItem);
+            }
+        });
     }
 
     @Override
@@ -71,7 +89,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     }
 
     public void setLocalItems(List<Item> localItems) {
-        this.localItems = localItems;
+        this.localItems = localItems == null ? new ArrayList<>() : localItems;
         notifyDataSetChanged();
     }
 
