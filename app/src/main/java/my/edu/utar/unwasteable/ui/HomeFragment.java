@@ -10,7 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -52,8 +53,12 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupCardNavigation(View view) {
-        View.OnClickListener openPantry = v ->
-                Navigation.findNavController(view).navigate(R.id.item_list);
+        View.OnClickListener openPantry = v -> {
+            BottomNavigationView bottomNavigationView =
+                    requireActivity().findViewById(R.id.bottom_navigation_view);
+
+            bottomNavigationView.setSelectedItemId(R.id.item_list);
+        };
 
         view.findViewById(R.id.cardHomePantry).setOnClickListener(openPantry);
         view.findViewById(R.id.cardHomeSoon).setOnClickListener(openPantry);
@@ -63,7 +68,6 @@ public class HomeFragment extends Fragment {
 
     private void setupDashboardData() {
         ItemViewModel itemViewModel = new ViewModelProvider(this).get(ItemViewModel.class);
-
         itemViewModel.getAllItems().observe(getViewLifecycleOwner(), this::updateDashboard);
     }
 
