@@ -49,7 +49,6 @@
                 android:orientation="vertical"
                 android:padding="20dp">
 
-                <!-- Item section -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -118,14 +117,6 @@
                         android:paddingBottom="14dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <Button
-                    android:id="@+id/button_save"
-                    android:layout_width="match_parent"
-                    android:layout_height="52dp"
-                    android:layout_marginTop="22dp"
-                    android:text="@string/save_item" />
-
-                <!-- Divider -->
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -133,7 +124,6 @@
                     android:layout_marginBottom="20dp"
                     android:background="@color/divider_soft" />
 
-                <!-- Location section -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -166,14 +156,6 @@
                         android:paddingBottom="14dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <Button
-                    android:id="@+id/button_save_location"
-                    android:layout_width="match_parent"
-                    android:layout_height="52dp"
-                    android:layout_marginTop="18dp"
-                    android:text="@string/save_location" />
-
-                <!-- Divider -->
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -181,7 +163,6 @@
                     android:layout_marginBottom="20dp"
                     android:background="@color/divider_soft" />
 
-                <!-- Category section -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -215,11 +196,11 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
-                    android:id="@+id/button_save_category"
+                    android:id="@+id/button_save"
                     android:layout_width="match_parent"
                     android:layout_height="52dp"
-                    android:layout_marginTop="18dp"
-                    android:text="@string/save_category" />
+                    android:layout_marginTop="24dp"
+                    android:text="Save Details" />
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
