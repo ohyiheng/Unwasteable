@@ -53,7 +53,6 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <!-- First row -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -62,10 +61,14 @@
             android:weightSum="2">
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardHomePantry"
                 android:layout_width="0dp"
-                android:layout_height="132dp"
+                android:layout_height="144dp"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
                 app:cardBackgroundColor="@color/surface_card"
                 app:cardCornerRadius="20dp"
                 app:cardUseCompatPadding="true">
@@ -85,36 +88,50 @@
                         app:tint="@color/green_primary_dark" />
 
                     <TextView
+                        android:id="@+id/tvHomePantryCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
+                        android:layout_marginTop="8dp"
                         android:includeFontPadding="false"
-                        android:text="@string/home_summary_items_title"
+                        android:text="0"
                         android:textColor="@color/text_primary"
-                        android:textSize="14sp"
+                        android:textSize="28sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="7dp"
+                        android:layout_marginTop="4dp"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:text="@string/home_summary_items_title"
+                        android:textColor="@color/text_primary"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
                         android:ellipsize="end"
                         android:gravity="center"
                         android:includeFontPadding="false"
                         android:maxLines="1"
                         android:text="@string/home_summary_items_subtitle"
                         android:textColor="@color/text_secondary"
-                        android:textSize="12sp" />
-
+                        android:textSize="11sp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardHomeSoon"
                 android:layout_width="0dp"
-                android:layout_height="132dp"
+                android:layout_height="144dp"
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
                 app:cardBackgroundColor="@color/surface_card"
                 app:cardCornerRadius="20dp"
                 app:cardUseCompatPadding="true">
@@ -130,37 +147,46 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:contentDescription="@null"
-                        android:src="@drawable/ic_home_add_24"
-                        app:tint="@color/green_primary_dark" />
+                        android:src="@drawable/ic_home_soon_24"
+                        app:tint="@color/warning_text" />
 
                     <TextView
+                        android:id="@+id/tvHomeSoonCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
+                        android:layout_marginTop="8dp"
                         android:includeFontPadding="false"
-                        android:text="@string/home_summary_add_title"
+                        android:text="0"
                         android:textColor="@color/text_primary"
-                        android:textSize="14sp"
+                        android:textSize="28sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="7dp"
+                        android:layout_marginTop="4dp"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:text="@string/home_summary_soon_title"
+                        android:textColor="@color/text_primary"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
                         android:ellipsize="end"
                         android:gravity="center"
                         android:includeFontPadding="false"
                         android:maxLines="1"
-                        android:text="@string/home_summary_add_subtitle"
+                        android:text="@string/home_summary_soon_subtitle"
                         android:textColor="@color/text_secondary"
-                        android:textSize="12sp" />
-
+                        android:textSize="11sp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
 
-        <!-- Second row -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -169,10 +195,14 @@
             android:weightSum="2">
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardHomeExpired"
                 android:layout_width="0dp"
-                android:layout_height="132dp"
+                android:layout_height="144dp"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
                 app:cardBackgroundColor="@color/surface_card"
                 app:cardCornerRadius="20dp"
                 app:cardUseCompatPadding="true">
@@ -188,40 +218,54 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:contentDescription="@null"
-                        android:src="@drawable/ic_home_category_24"
-                        app:tint="@color/green_primary_dark" />
+                        android:src="@drawable/ic_home_expired_24"
+                        app:tint="@color/danger_text" />
 
                     <TextView
+                        android:id="@+id/tvHomeExpiredCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
+                        android:layout_marginTop="8dp"
                         android:includeFontPadding="false"
-                        android:text="@string/home_summary_categories_title"
+                        android:text="0"
                         android:textColor="@color/text_primary"
-                        android:textSize="14sp"
+                        android:textSize="28sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="7dp"
+                        android:layout_marginTop="4dp"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:text="@string/home_summary_expired_title"
+                        android:textColor="@color/text_primary"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
                         android:ellipsize="end"
                         android:gravity="center"
                         android:includeFontPadding="false"
                         android:maxLines="1"
-                        android:text="@string/home_summary_categories_subtitle"
+                        android:text="@string/home_summary_expired_subtitle"
                         android:textColor="@color/text_secondary"
-                        android:textSize="12sp" />
-
+                        android:textSize="11sp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardHomeUnknown"
                 android:layout_width="0dp"
-                android:layout_height="132dp"
+                android:layout_height="144dp"
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
                 app:cardBackgroundColor="@color/surface_card"
                 app:cardCornerRadius="20dp"
                 app:cardUseCompatPadding="true">
@@ -237,32 +281,42 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:contentDescription="@null"
-                        android:src="@drawable/ic_home_location_24"
-                        app:tint="@color/green_primary_dark" />
+                        android:src="@drawable/ic_home_unknown_24"
+                        app:tint="@color/text_secondary" />
 
                     <TextView
+                        android:id="@+id/tvHomeUnknownCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
+                        android:layout_marginTop="8dp"
                         android:includeFontPadding="false"
-                        android:text="@string/home_summary_locations_title"
+                        android:text="0"
                         android:textColor="@color/text_primary"
-                        android:textSize="14sp"
+                        android:textSize="28sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="7dp"
+                        android:layout_marginTop="4dp"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:text="@string/home_summary_unknown_title"
+                        android:textColor="@color/text_primary"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
                         android:ellipsize="end"
                         android:gravity="center"
                         android:includeFontPadding="false"
                         android:maxLines="1"
-                        android:text="@string/home_summary_locations_subtitle"
+                        android:text="@string/home_summary_unknown_subtitle"
                         android:textColor="@color/text_secondary"
-                        android:textSize="12sp" />
-
+                        android:textSize="11sp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
@@ -290,13 +344,13 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/tvHomeTipBody"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
                     android:text="@string/home_food_tip_body"
                     android:textColor="@color/warning_text"
                     android:textSize="14sp" />
-
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 

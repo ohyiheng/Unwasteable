@@ -72,4 +72,25 @@
         <item quantity="one">%1$d item</item>
         <item quantity="other">%1$d items</item>
     </plurals>
+
+    <string name="home_summary_soon_title">Expiring Soon</string>
+    <string name="home_summary_soon_subtitle">Within 3 days</string>
+
+    <string name="home_summary_expired_title">Expired</string>
+    <string name="home_summary_expired_subtitle">Needs attention</string>
+
+    <string name="home_summary_unknown_title">Unknown Date</string>
+    <string name="home_summary_unknown_subtitle">No expiry set</string>
+
+    <string name="home_tip_body_good">Your pantry looks organised. Keep checking expiry dates regularly to reduce avoidable food waste.</string>
+
+    <plurals name="home_tip_soon">
+        <item quantity="one">%1$d item will expire within 3 days. Consider using it first.</item>
+        <item quantity="other">%1$d items will expire within 3 days. Consider using them first.</item>
+    </plurals>
+
+    <plurals name="home_tip_expired">
+        <item quantity="one">%1$d item is expired. Review it before use.</item>
+        <item quantity="other">%1$d items are expired. Review them before use.</item>
+    </plurals>
 </resources>
