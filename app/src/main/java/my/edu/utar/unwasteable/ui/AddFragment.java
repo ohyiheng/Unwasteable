@@ -108,15 +108,19 @@ public class AddFragment extends Fragment {
         String locationName = getText(editLocationName);
         String categoryName = getText(editCategoryName);
 
-        boolean hasItemInput = !itemName.isEmpty()
-                || !quantityText.isEmpty()
-                || !expiryText.isEmpty();
-
+        boolean hasItemInput = !itemName.isEmpty() || !quantityText.isEmpty();
+        boolean hasOnlyExpiryDateForItem = !expiryText.isEmpty() && !hasItemInput;
         boolean hasLocationInput = !locationName.isEmpty();
         boolean hasCategoryInput = !categoryName.isEmpty();
 
         if (!hasItemInput && !hasLocationInput && !hasCategoryInput) {
             editName.setError(getString(R.string.error_enter_one_detail));
+            editName.requestFocus();
+            return;
+        }
+
+        if (hasOnlyExpiryDateForItem && !hasLocationInput && !hasCategoryInput) {
+            editName.setError(getString(R.string.error_item_name_required));
             editName.requestFocus();
             return;
         }
