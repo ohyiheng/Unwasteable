@@ -20,12 +20,6 @@ public interface ItemDao {
     @Query("SELECT * FROM items WHERE id = :id")
     Item getItemById(int id);
 
-    @Query("SELECT * FROM items WHERE category_id = :categoryId")
-    List<Item> getItemsByCategoryId(int categoryId);
-
-    @Query("SELECT * FROM items WHERE location_id = :locationId")
-    List<Item> getItemsByLocationId(int locationId);
-
     @Query("SELECT * FROM items WHERE expiry_date < :currentDate")
     List<Item> getExpiredItems(String currentDate);
 

@@ -35,9 +35,6 @@
     <string name="category_form_title">New Category</string>
     <string name="category_form_subtitle">Organise pantry items into useful food groups.</string>
 
-    <string name="save_item">Save Item</string>
-    <string name="save_location">Save Location</string>
-    <string name="save_category">Save Category</string>
     <string name="save_details">Save Details</string>
 
     <string name="item_name_hint">Item Name</string>
@@ -115,7 +112,6 @@
     <string name="update">Update</string>
     <string name="item_updated">Item updated</string>
 
-    <string name="error_enter_one_detail">Enter at least one detail</string>
     <string name="error_item_name_required">Item name is required</string>
     <string name="error_quantity_required">Quantity is required</string>
     <string name="error_invalid_quantity">Enter a valid quantity</string>
@@ -123,5 +119,4 @@
     <string name="error_invalid_date_format">Use date format yyyy-MM-dd</string>
 
     <string name="toast_detail_saved">Detail saved</string>
-    <string name="toast_details_saved">Details saved</string>
 </resources>

@@ -9,11 +9,9 @@ import androidx.room.TypeConverters;
 
 @Database(
         entities = {
-                Category.class,
-                Location.class,
-                Item.class,
+                Item.class
         },
-        version = 3
+        version = 4
 )
 @TypeConverters({DateConverters.class})
 public abstract class AppDatabase extends RoomDatabase {
@@ -35,7 +33,5 @@ public abstract class AppDatabase extends RoomDatabase {
         }
     }
 
-    public abstract CategoryDao categoryDao();
-    public abstract LocationDao locationDao();
     public abstract ItemDao itemDao();
 }
