@@ -61,7 +61,7 @@
     <string name="food_info_no_result">No external food information found for “%1$s”.</string>
     <string name="food_info_error">Unable to retrieve food information. Check your internet connection and try again.</string>
     <string name="food_info_not_available">Not available</string>
-    <string name="food_info_result">Product: %1$s\nBrand: %2$s\nCategory: %3$s\nSource: Open Food Facts API</string>
+    <string name="food_info_result">Product\n%1$s\n\nBrand\n%2$s\n\nCategory\n%3$s\n\nSource\nOpen Food Facts API</string>
 
     <string name="save_details">Save Details</string>
 
