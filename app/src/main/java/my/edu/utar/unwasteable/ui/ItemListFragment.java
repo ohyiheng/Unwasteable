@@ -40,6 +40,7 @@ import my.edu.utar.unwasteable.viewmodel.ItemViewModel;
 
 public class ItemListFragment extends Fragment {
 
+    public static final String REQUEST_PANTRY_FILTER = "pantry_filter_request";
     public static final String ARG_INITIAL_FILTER = "initial_filter";
 
     public static final String FILTER_ALL = "all";
@@ -58,6 +59,12 @@ public class ItemListFragment extends Fragment {
     private TextView tvEmptyStateBody;
     private Button buttonAddFirstItem;
     private TextInputEditText editSearchItems;
+
+    private Chip chipAll;
+    private Chip chipFresh;
+    private Chip chipSoon;
+    private Chip chipExpired;
+    private Chip chipUnknown;
 
     private final List<Item> allItems = new ArrayList<>();
     private String selectedFilter = FILTER_ALL;
@@ -88,9 +95,25 @@ public class ItemListFragment extends Fragment {
         setupRecyclerView();
         setupSearch();
         setupFilterChips(view);
+        setupPantryFilterRequestListener();
         setupViewModel();
 
         return view;
+    }
+
+    private void setupPantryFilterRequestListener() {
+        getParentFragmentManager().setFragmentResultListener(
+                REQUEST_PANTRY_FILTER,
+                getViewLifecycleOwner(),
+                (requestKey, bundle) -> {
+                    selectedFilter = sanitizeFilter(
+                            bundle.getString(ARG_INITIAL_FILTER, FILTER_ALL)
+                    );
+
+                    updateCheckedChip();
+                    applyFilters();
+                }
+        );
     }
 
     private String getInitialFilter() {
@@ -100,9 +123,12 @@ public class ItemListFragment extends Fragment {
             return FILTER_ALL;
         }
 
-        String filter = args.getString(ARG_INITIAL_FILTER, FILTER_ALL);
+        return sanitizeFilter(args.getString(ARG_INITIAL_FILTER, FILTER_ALL));
+    }
 
-        if (FILTER_FRESH.equals(filter)
+    private String sanitizeFilter(String filter) {
+        if (FILTER_ALL.equals(filter)
+                || FILTER_FRESH.equals(filter)
                 || FILTER_SOON.equals(filter)
                 || FILTER_EXPIRED.equals(filter)
                 || FILTER_UNKNOWN.equals(filter)) {
@@ -161,13 +187,13 @@ public class ItemListFragment extends Fragment {
     }
 
     private void setupFilterChips(View view) {
-        Chip chipAll = view.findViewById(R.id.chip_filter_all);
-        Chip chipFresh = view.findViewById(R.id.chip_filter_fresh);
-        Chip chipSoon = view.findViewById(R.id.chip_filter_soon);
-        Chip chipExpired = view.findViewById(R.id.chip_filter_expired);
-        Chip chipUnknown = view.findViewById(R.id.chip_filter_unknown);
+        chipAll = view.findViewById(R.id.chip_filter_all);
+        chipFresh = view.findViewById(R.id.chip_filter_fresh);
+        chipSoon = view.findViewById(R.id.chip_filter_soon);
+        chipExpired = view.findViewById(R.id.chip_filter_expired);
+        chipUnknown = view.findViewById(R.id.chip_filter_unknown);
 
-        setInitialCheckedChip(chipAll, chipFresh, chipSoon, chipExpired, chipUnknown);
+        updateCheckedChip();
 
         chipAll.setOnClickListener(v -> {
             selectedFilter = FILTER_ALL;
@@ -195,13 +221,15 @@ public class ItemListFragment extends Fragment {
         });
     }
 
-    private void setInitialCheckedChip(
-            Chip chipAll,
-            Chip chipFresh,
-            Chip chipSoon,
-            Chip chipExpired,
-            Chip chipUnknown
-    ) {
+    private void updateCheckedChip() {
+        if (chipAll == null
+                || chipFresh == null
+                || chipSoon == null
+                || chipExpired == null
+                || chipUnknown == null) {
+            return;
+        }
+
         chipAll.setChecked(FILTER_ALL.equals(selectedFilter));
         chipFresh.setChecked(FILTER_FRESH.equals(selectedFilter));
         chipSoon.setChecked(FILTER_SOON.equals(selectedFilter));

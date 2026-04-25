@@ -10,7 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -53,27 +54,35 @@ public class HomeFragment extends Fragment {
 
     private void setupCardNavigation(View view) {
         view.findViewById(R.id.cardHomePantry).setOnClickListener(v ->
-                openPantryWithFilter(view, ItemListFragment.FILTER_ALL)
+                openPantryWithFilter(ItemListFragment.FILTER_ALL)
         );
 
         view.findViewById(R.id.cardHomeSoon).setOnClickListener(v ->
-                openPantryWithFilter(view, ItemListFragment.FILTER_SOON)
+                openPantryWithFilter(ItemListFragment.FILTER_SOON)
         );
 
         view.findViewById(R.id.cardHomeExpired).setOnClickListener(v ->
-                openPantryWithFilter(view, ItemListFragment.FILTER_EXPIRED)
+                openPantryWithFilter(ItemListFragment.FILTER_EXPIRED)
         );
 
         view.findViewById(R.id.cardHomeUnknown).setOnClickListener(v ->
-                openPantryWithFilter(view, ItemListFragment.FILTER_UNKNOWN)
+                openPantryWithFilter(ItemListFragment.FILTER_UNKNOWN)
         );
     }
 
-    private void openPantryWithFilter(View view, String filter) {
+    private void openPantryWithFilter(String filter) {
         Bundle args = new Bundle();
         args.putString(ItemListFragment.ARG_INITIAL_FILTER, filter);
 
-        Navigation.findNavController(view).navigate(R.id.item_list, args);
+        getParentFragmentManager().setFragmentResult(
+                ItemListFragment.REQUEST_PANTRY_FILTER,
+                args
+        );
+
+        BottomNavigationView bottomNavigationView =
+                requireActivity().findViewById(R.id.bottom_navigation_view);
+
+        bottomNavigationView.setSelectedItemId(R.id.item_list);
     }
 
     private void setupDashboardData() {
