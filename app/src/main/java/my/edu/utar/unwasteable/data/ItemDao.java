@@ -12,7 +12,7 @@ import java.util.List;
 @Dao
 public interface ItemDao {
     @Insert
-    void insert(Item item);
+    long insert(Item item);
 
     @Query("SELECT * FROM items")
     LiveData<List<Item>> getItems();

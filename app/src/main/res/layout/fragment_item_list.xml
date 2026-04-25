@@ -176,6 +176,18 @@
                 app:chipStrokeColor="@color/chip_filter_stroke"
                 app:chipStrokeWidth="1dp" />
 
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_filter_low_stock"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pantry_filter_low_stock"
+                android:textColor="@color/chip_filter_text"
+                app:checkedIconTint="@color/chip_filter_text"
+                app:chipBackgroundColor="@color/chip_filter_background"
+                app:chipStrokeColor="@color/chip_filter_stroke"
+                app:chipStrokeWidth="1dp" />
+
         </com.google.android.material.chip.ChipGroup>
     </HorizontalScrollView>
 

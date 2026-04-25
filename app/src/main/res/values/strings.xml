@@ -12,9 +12,25 @@
     <string name="home_food_tip_body">Store items properly and check expiry dates regularly to reduce avoidable waste.</string>
 
     <string name="home_today_focus_title">Today’s Focus</string>
-    <string name="home_today_focus_expired">• Use or review expired items first.</string>
-    <string name="home_today_focus_soon">• Prioritise items expiring within 3 days.</string>
-    <string name="home_today_focus_unknown">• Add expiry dates for items marked as unknown.</string>
+    <string name="home_focus_expired_format">• Expired items: %1$d</string>
+    <string name="home_focus_soon_format">• Expiring soon: %1$d</string>
+    <string name="home_focus_low_stock_format">• Low stock items: %1$d</string>
+    <string name="home_focus_unknown_format">• Missing expiry dates: %1$d</string>
+
+    <string name="home_urgent_title">Urgent Items</string>
+    <string name="home_urgent_expired">Expired</string>
+    <string name="home_urgent_soon">Expiring soon</string>
+    <string name="home_urgent_low_stock">Low stock</string>
+    <string name="home_urgent_empty">No urgent pantry action is needed right now.</string>
+
+    <string name="home_storage_summary_title">Storage Snapshot</string>
+    <string name="home_category_summary_label">Top categories</string>
+    <string name="home_location_summary_label">Top locations</string>
+    <string name="home_summary_no_category">No category data yet</string>
+    <string name="home_summary_no_location">No location data yet</string>
+
+    <string name="home_recent_activity_title">Recent Activity</string>
+    <string name="home_recent_activity_empty">No activity recorded yet.</string>
 
     <string name="home_summary_items_title">Pantry Items</string>
     <string name="home_summary_items_subtitle">Track stored items</string>
@@ -72,6 +88,7 @@
     <string name="pantry_filter_soon">Soon</string>
     <string name="pantry_filter_expired">Expired</string>
     <string name="pantry_filter_unknown">Unknown</string>
+    <string name="pantry_filter_low_stock">Low Stock</string>
 
     <string name="pantry_empty_title">No pantry items yet</string>
     <string name="pantry_empty_body">Start by adding your first food item so Unwasteable can help you track quantities and expiry dates.</string>
@@ -104,6 +121,16 @@
     <plurals name="home_tip_expired">
         <item quantity="one">%1$d item is expired. Review it before use.</item>
         <item quantity="other">%1$d items are expired. Review them before use.</item>
+    </plurals>
+
+    <plurals name="home_tip_low_stock">
+        <item quantity="one">%1$d item is low in stock. Consider restocking it.</item>
+        <item quantity="other">%1$d items are low in stock. Consider restocking them.</item>
+    </plurals>
+
+    <plurals name="home_tip_unknown">
+        <item quantity="one">%1$d item has no expiry date. Add one to improve tracking.</item>
+        <item quantity="other">%1$d items have no expiry dates. Add them to improve tracking.</item>
     </plurals>
 
     <string name="delete_item">Delete item</string>

@@ -129,6 +129,7 @@
                         android:text="@string/home_summary_items_subtitle"
                         android:textColor="@color/text_secondary"
                         android:textSize="11sp" />
+
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -195,6 +196,7 @@
                         android:text="@string/home_summary_soon_subtitle"
                         android:textColor="@color/text_secondary"
                         android:textSize="11sp" />
+
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
@@ -269,6 +271,7 @@
                         android:text="@string/home_summary_expired_subtitle"
                         android:textColor="@color/text_secondary"
                         android:textSize="11sp" />
+
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -335,6 +338,7 @@
                         android:text="@string/home_summary_unknown_subtitle"
                         android:textColor="@color/text_secondary"
                         android:textSize="11sp" />
+
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
@@ -343,61 +347,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
-            app:cardBackgroundColor="@color/surface_soft"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="0dp"
-            app:cardUseCompatPadding="false"
-            app:strokeColor="@color/green_soft"
-            app:strokeWidth="1dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/home_today_focus_title"
-                    android:textColor="@color/green_primary_dark"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:lineSpacingExtra="3dp"
-                    android:text="@string/home_today_focus_expired"
-                    android:textColor="@color/text_primary"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:lineSpacingExtra="3dp"
-                    android:text="@string/home_today_focus_soon"
-                    android:textColor="@color/text_primary"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:lineSpacingExtra="3dp"
-                    android:text="@string/home_today_focus_unknown"
-                    android:textColor="@color/text_primary"
-                    android:textSize="14sp" />
-
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             app:cardBackgroundColor="@color/warning_soft"
             app:cardCornerRadius="20dp"
             app:cardElevation="0dp"
@@ -428,6 +377,7 @@
                     android:text="@string/home_food_tip_body"
                     android:textColor="@color/warning_text"
                     android:textSize="14sp" />
+
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 

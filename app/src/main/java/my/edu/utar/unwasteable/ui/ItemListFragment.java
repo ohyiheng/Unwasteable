@@ -48,6 +48,7 @@ public class ItemListFragment extends Fragment {
     public static final String FILTER_SOON = "soon";
     public static final String FILTER_EXPIRED = "expired";
     public static final String FILTER_UNKNOWN = "unknown";
+    public static final String FILTER_LOW_STOCK = "low_stock";
 
     private ItemViewModel itemViewModel;
     private ItemAdapter itemAdapter;
@@ -65,6 +66,7 @@ public class ItemListFragment extends Fragment {
     private Chip chipSoon;
     private Chip chipExpired;
     private Chip chipUnknown;
+    private Chip chipLowStock;
 
     private final List<Item> allItems = new ArrayList<>();
     private String selectedFilter = FILTER_ALL;
@@ -131,7 +133,8 @@ public class ItemListFragment extends Fragment {
                 || FILTER_FRESH.equals(filter)
                 || FILTER_SOON.equals(filter)
                 || FILTER_EXPIRED.equals(filter)
-                || FILTER_UNKNOWN.equals(filter)) {
+                || FILTER_UNKNOWN.equals(filter)
+                || FILTER_LOW_STOCK.equals(filter)) {
             return filter;
         }
 
@@ -192,6 +195,7 @@ public class ItemListFragment extends Fragment {
         chipSoon = view.findViewById(R.id.chip_filter_soon);
         chipExpired = view.findViewById(R.id.chip_filter_expired);
         chipUnknown = view.findViewById(R.id.chip_filter_unknown);
+        chipLowStock = view.findViewById(R.id.chip_filter_low_stock);
 
         updateCheckedChip();
 
@@ -219,6 +223,11 @@ public class ItemListFragment extends Fragment {
             selectedFilter = FILTER_UNKNOWN;
             applyFilters();
         });
+
+        chipLowStock.setOnClickListener(v -> {
+            selectedFilter = FILTER_LOW_STOCK;
+            applyFilters();
+        });
     }
 
     private void updateCheckedChip() {
@@ -226,7 +235,8 @@ public class ItemListFragment extends Fragment {
                 || chipFresh == null
                 || chipSoon == null
                 || chipExpired == null
-                || chipUnknown == null) {
+                || chipUnknown == null
+                || chipLowStock == null) {
             return;
         }
 
@@ -235,6 +245,7 @@ public class ItemListFragment extends Fragment {
         chipSoon.setChecked(FILTER_SOON.equals(selectedFilter));
         chipExpired.setChecked(FILTER_EXPIRED.equals(selectedFilter));
         chipUnknown.setChecked(FILTER_UNKNOWN.equals(selectedFilter));
+        chipLowStock.setChecked(FILTER_LOW_STOCK.equals(selectedFilter));
     }
 
     private void setupViewModel() {
@@ -251,6 +262,10 @@ public class ItemListFragment extends Fragment {
     }
 
     private void applyFilters() {
+        if (itemAdapter == null) {
+            return;
+        }
+
         String query = getSearchQuery();
         List<Item> filteredItems = new ArrayList<>();
 
@@ -269,28 +284,34 @@ public class ItemListFragment extends Fragment {
     private void sortByUrgency(List<Item> items) {
         items.sort(
                 Comparator
-                        .comparingInt((Item item) -> getUrgencyRank(item.expiryDate))
+                        .comparingInt((Item item) -> getUrgencyRank(item.expiryDate, item.quantity))
                         .thenComparing(item -> item.expiryDate == null ? LocalDate.MAX : item.expiryDate)
                         .thenComparing(item -> item.name == null ? "" : item.name.toLowerCase(Locale.ROOT))
         );
     }
 
-    private int getUrgencyRank(LocalDate expiryDate) {
+    private int getUrgencyRank(LocalDate expiryDate, double quantity) {
+        if (expiryDate != null) {
+            LocalDate today = LocalDate.now();
+
+            if (expiryDate.isBefore(today)) {
+                return 0;
+            }
+
+            if (!expiryDate.isAfter(today.plusDays(3))) {
+                return 1;
+            }
+        }
+
+        if (quantity <= 1) {
+            return 2;
+        }
+
         if (expiryDate == null) {
-            return 3;
+            return 4;
         }
 
-        LocalDate today = LocalDate.now();
-
-        if (expiryDate.isBefore(today)) {
-            return 0;
-        }
-
-        if (!expiryDate.isAfter(today.plusDays(3))) {
-            return 1;
-        }
-
-        return 2;
+        return 3;
     }
 
     private String getSearchQuery() {
@@ -325,6 +346,10 @@ public class ItemListFragment extends Fragment {
     private boolean matchesStatusFilter(Item item) {
         if (FILTER_ALL.equals(selectedFilter)) {
             return true;
+        }
+
+        if (FILTER_LOW_STOCK.equals(selectedFilter)) {
+            return item.quantity <= 1;
         }
 
         return selectedFilter.equals(getItemStatus(item.expiryDate));
@@ -416,7 +441,7 @@ public class ItemListFragment extends Fragment {
         }
 
         item.quantity = item.quantity - 1;
-        itemViewModel.update(item);
+        itemViewModel.updateWithLog(item, "Used", -1);
 
         Toast.makeText(getContext(), R.string.quantity_updated, Toast.LENGTH_SHORT).show();
     }
@@ -427,7 +452,7 @@ public class ItemListFragment extends Fragment {
         }
 
         item.quantity = item.quantity + 1;
-        itemViewModel.update(item);
+        itemViewModel.updateWithLog(item, "Restocked", 1);
 
         Toast.makeText(getContext(), R.string.quantity_updated, Toast.LENGTH_SHORT).show();
     }
@@ -437,12 +462,13 @@ public class ItemListFragment extends Fragment {
                 .setTitle(R.string.quantity_depleted_title)
                 .setMessage(R.string.quantity_depleted_message)
                 .setNegativeButton(R.string.keep_item, (dialog, which) -> {
+                    double usedAmount = item.quantity;
                     item.quantity = 0;
-                    itemViewModel.update(item);
+                    itemViewModel.updateWithLog(item, "Used", -usedAmount);
                     Toast.makeText(getContext(), R.string.quantity_updated, Toast.LENGTH_SHORT).show();
                 })
                 .setPositiveButton(R.string.delete, (dialog, which) -> {
-                    itemViewModel.delete(item);
+                    itemViewModel.deleteWithLog(item);
                     Toast.makeText(getContext(), R.string.item_deleted, Toast.LENGTH_SHORT).show();
                 })
                 .show();
@@ -568,7 +594,7 @@ public class ItemListFragment extends Fragment {
         item.locationName = locationName.isEmpty() ? null : locationName;
         item.categoryName = categoryName.isEmpty() ? null : categoryName;
 
-        itemViewModel.update(item);
+        itemViewModel.updateWithLog(item, "Updated", 0);
         Toast.makeText(getContext(), R.string.item_updated, Toast.LENGTH_SHORT).show();
 
         return true;
@@ -610,7 +636,7 @@ public class ItemListFragment extends Fragment {
                 .setMessage(R.string.delete_item_message)
                 .setNegativeButton(R.string.cancel, null)
                 .setPositiveButton(R.string.delete, (dialog, which) -> {
-                    itemViewModel.delete(item);
+                    itemViewModel.deleteWithLog(item);
                     Toast.makeText(getContext(), R.string.item_deleted, Toast.LENGTH_SHORT).show();
                 })
                 .show();

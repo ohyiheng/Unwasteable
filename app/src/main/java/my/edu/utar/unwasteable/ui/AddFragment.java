@@ -141,14 +141,14 @@ public class AddFragment extends Fragment {
     }
 
     private void insertNewItem(Item itemToSave) {
-        itemViewModel.insert(itemToSave);
+        itemViewModel.insertWithLog(itemToSave);
         clearSavedFields();
 
         Toast.makeText(requireContext(), R.string.toast_detail_saved, Toast.LENGTH_SHORT).show();
     }
 
     private void updateExistingItem(Item itemToSave, Item existingItem) {
-        itemViewModel.insertOrUpdateExisting(itemToSave, existingItem);
+        itemViewModel.insertOrUpdateExistingWithLog(itemToSave, existingItem);
         clearSavedFields();
 
         Toast.makeText(requireContext(), R.string.item_updated, Toast.LENGTH_SHORT).show();
