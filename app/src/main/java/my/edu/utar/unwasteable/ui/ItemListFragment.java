@@ -205,10 +205,14 @@ public class ItemListFragment extends Fragment {
         String name = item.name == null ? "" : item.name.toLowerCase(Locale.ROOT);
         String quantity = String.valueOf(item.quantity).toLowerCase(Locale.ROOT);
         String expiryDate = item.expiryDate == null ? "" : item.expiryDate.toString().toLowerCase(Locale.ROOT);
+        String locationName = item.locationName == null ? "" : item.locationName.toLowerCase(Locale.ROOT);
+        String categoryName = item.categoryName == null ? "" : item.categoryName.toLowerCase(Locale.ROOT);
 
         return name.contains(query)
                 || quantity.contains(query)
-                || expiryDate.contains(query);
+                || expiryDate.contains(query)
+                || locationName.contains(query)
+                || categoryName.contains(query);
     }
 
     private boolean matchesStatusFilter(Item item) {
@@ -305,9 +309,13 @@ public class ItemListFragment extends Fragment {
         TextInputEditText editName = dialogView.findViewById(R.id.edit_item_name);
         TextInputEditText editQuantity = dialogView.findViewById(R.id.edit_item_quantity);
         TextInputEditText editExpiryDate = dialogView.findViewById(R.id.edit_item_expiry_date);
+        TextInputEditText editLocationName = dialogView.findViewById(R.id.edit_item_location_name);
+        TextInputEditText editCategoryName = dialogView.findViewById(R.id.edit_item_category_name);
 
         editName.setText(item.name == null ? "" : item.name);
         editQuantity.setText(formatQuantityForEdit(item.quantity));
+        editLocationName.setText(item.locationName == null ? "" : item.locationName);
+        editCategoryName.setText(item.categoryName == null ? "" : item.categoryName);
 
         if (item.expiryDate != null) {
             editExpiryDate.setText(item.expiryDate.toString());
@@ -326,7 +334,14 @@ public class ItemListFragment extends Fragment {
 
         dialog.setOnShowListener(dialogInterface ->
                 dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
-                    boolean updated = updateItemFromDialog(item, editName, editQuantity, editExpiryDate);
+                    boolean updated = updateItemFromDialog(
+                            item,
+                            editName,
+                            editQuantity,
+                            editExpiryDate,
+                            editLocationName,
+                            editCategoryName
+                    );
 
                     if (updated) {
                         dialog.dismiss();
@@ -341,23 +356,21 @@ public class ItemListFragment extends Fragment {
             Item item,
             TextInputEditText editName,
             TextInputEditText editQuantity,
-            TextInputEditText editExpiryDate
+            TextInputEditText editExpiryDate,
+            TextInputEditText editLocationName,
+            TextInputEditText editCategoryName
     ) {
         editName.setError(null);
         editQuantity.setError(null);
         editExpiryDate.setError(null);
+        editLocationName.setError(null);
+        editCategoryName.setError(null);
 
-        String name = editName.getText() != null
-                ? editName.getText().toString().trim()
-                : "";
-
-        String quantityText = editQuantity.getText() != null
-                ? editQuantity.getText().toString().trim()
-                : "";
-
-        String expiryText = editExpiryDate.getText() != null
-                ? editExpiryDate.getText().toString().trim()
-                : "";
+        String name = getDialogText(editName);
+        String quantityText = getDialogText(editQuantity);
+        String expiryText = getDialogText(editExpiryDate);
+        String locationName = getDialogText(editLocationName);
+        String categoryName = getDialogText(editCategoryName);
 
         if (name.isEmpty()) {
             editName.setError(getString(R.string.error_item_name_required));
@@ -402,11 +415,19 @@ public class ItemListFragment extends Fragment {
         item.name = name;
         item.quantity = quantity;
         item.expiryDate = expiryDate;
+        item.locationName = locationName.isEmpty() ? null : locationName;
+        item.categoryName = categoryName.isEmpty() ? null : categoryName;
 
         itemViewModel.update(item);
         Toast.makeText(getContext(), R.string.item_updated, Toast.LENGTH_SHORT).show();
 
         return true;
+    }
+
+    private String getDialogText(TextInputEditText editText) {
+        return editText.getText() != null
+                ? editText.getText().toString().trim()
+                : "";
     }
 
     private void showDatePicker(TextInputEditText targetEditText) {

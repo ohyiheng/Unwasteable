@@ -36,6 +36,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         private final TextView tvItemName;
         private final TextView tvItemQuantity;
         private final TextView tvItemExpiry;
+        private final TextView tvItemLocation;
+        private final TextView tvItemCategory;
         private final TextView tvItemBadge;
         private final ImageButton buttonEditItem;
         private final ImageButton buttonDeleteItem;
@@ -45,6 +47,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             tvItemName = itemView.findViewById(R.id.tvItemName);
             tvItemQuantity = itemView.findViewById(R.id.tvItemQuantity);
             tvItemExpiry = itemView.findViewById(R.id.tvItemExpiry);
+            tvItemLocation = itemView.findViewById(R.id.tvItemLocation);
+            tvItemCategory = itemView.findViewById(R.id.tvItemCategory);
             tvItemBadge = itemView.findViewById(R.id.tvItemBadge);
             buttonEditItem = itemView.findViewById(R.id.buttonEditItem);
             buttonDeleteItem = itemView.findViewById(R.id.buttonDeleteItem);
@@ -77,6 +81,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             );
         }
 
+        bindOptionalDetail(holder.tvItemLocation, currentItem.locationName, R.string.item_location_format);
+        bindOptionalDetail(holder.tvItemCategory, currentItem.categoryName, R.string.item_category_format);
+
         bindBadge(holder.tvItemBadge, currentItem.expiryDate);
 
         holder.buttonEditItem.setOnClickListener(v -> {
@@ -100,6 +107,16 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     public void setLocalItems(List<Item> localItems) {
         this.localItems = localItems == null ? new ArrayList<>() : localItems;
         notifyDataSetChanged();
+    }
+
+    private void bindOptionalDetail(TextView textView, String value, int stringResId) {
+        if (value == null || value.trim().isEmpty()) {
+            textView.setVisibility(View.GONE);
+            return;
+        }
+
+        textView.setText(textView.getContext().getString(stringResId, value.trim()));
+        textView.setVisibility(View.VISIBLE);
     }
 
     private void bindBadge(TextView badgeView, LocalDate expiryDate) {

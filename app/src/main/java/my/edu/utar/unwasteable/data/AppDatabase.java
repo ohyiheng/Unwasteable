@@ -8,12 +8,12 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
 @Database(
-    entities = {
-        Category.class,
-        Location.class,
-        Item.class,
-    },
-    version = 2
+        entities = {
+                Category.class,
+                Location.class,
+                Item.class,
+        },
+        version = 3
 )
 @TypeConverters({DateConverters.class})
 public abstract class AppDatabase extends RoomDatabase {
@@ -25,11 +25,11 @@ public abstract class AppDatabase extends RoomDatabase {
         synchronized (AppDatabase.class) {
             if (Instance == null) {
                 Instance = Room.databaseBuilder(
-                    context.getApplicationContext(),
-                    AppDatabase.class,
-                    "unwasteable_app_db"
-                ).fallbackToDestructiveMigration(true)
-                    .build();
+                                context.getApplicationContext(),
+                                AppDatabase.class,
+                                "unwasteable_app_db"
+                        ).fallbackToDestructiveMigration(true)
+                        .build();
             }
             return Instance;
         }

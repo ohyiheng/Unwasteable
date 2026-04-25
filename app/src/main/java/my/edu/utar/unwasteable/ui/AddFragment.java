@@ -97,12 +97,17 @@ public class AddFragment extends Fragment {
         String itemName = getText(editName);
         String quantityText = getText(editQuantity);
         String expiryText = getText(editExpiryDate);
+        String locationName = getText(editLocationName);
+        String categoryName = getText(editCategoryName);
 
         Item itemToSave = buildItemOrShowError(itemName, quantityText, expiryText);
 
         if (itemToSave == null) {
             return;
         }
+
+        itemToSave.locationName = locationName.isEmpty() ? null : locationName;
+        itemToSave.categoryName = categoryName.isEmpty() ? null : categoryName;
 
         itemViewModel.insert(itemToSave);
         clearSavedFields();

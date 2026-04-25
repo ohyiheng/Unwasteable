@@ -49,6 +49,8 @@
     <string name="item_quantity_format">Quantity: %1$s</string>
     <string name="item_expiry_format">Expiry date: %1$s</string>
     <string name="item_expiry_empty">Expiry date: -</string>
+    <string name="item_location_format">Location: %1$s</string>
+    <string name="item_category_format">Category: %1$s</string>
 
     <string name="badge_fresh">Fresh</string>
     <string name="badge_soon">Soon</string>

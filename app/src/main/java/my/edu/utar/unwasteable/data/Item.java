@@ -9,22 +9,22 @@ import androidx.room.PrimaryKey;
 import java.time.LocalDate;
 
 @Entity(
-    tableName = "items",
-    foreignKeys = {
-        @ForeignKey(
-            entity = Category.class,
-            parentColumns = "id",
-            childColumns = "category_id",
-            onDelete = ForeignKey.SET_NULL
-        ),
-        @ForeignKey(
-            entity = Location.class,
-            parentColumns = "id",
-            childColumns = "location_id",
-            onDelete = ForeignKey.SET_NULL
-        )
-    },
-    indices = {@Index("category_id"), @Index("location_id")}
+        tableName = "items",
+        foreignKeys = {
+                @ForeignKey(
+                        entity = Category.class,
+                        parentColumns = "id",
+                        childColumns = "category_id",
+                        onDelete = ForeignKey.SET_NULL
+                ),
+                @ForeignKey(
+                        entity = Location.class,
+                        parentColumns = "id",
+                        childColumns = "location_id",
+                        onDelete = ForeignKey.SET_NULL
+                )
+        },
+        indices = {@Index("category_id"), @Index("location_id")}
 )
 public class Item {
     @PrimaryKey(autoGenerate = true)
@@ -37,6 +37,12 @@ public class Item {
 
     @ColumnInfo(name = "category_id")
     public Integer categoryId;
+
+    @ColumnInfo(name = "location_name")
+    public String locationName;
+
+    @ColumnInfo(name = "category_name")
+    public String categoryName;
 
     public double quantity;
 
