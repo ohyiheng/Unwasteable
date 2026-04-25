@@ -1,27 +1,26 @@
 # Unwasteable
 
-## Entity-relationship model
+Unwasteable is an Android pantry management application designed to help users track food items, quantities, expiry dates, storage locations, and categories in a simple local database.
 
-1. **`items`**
+## Current Data Model
 
-| Field       | Type    | Description                                         |
-|-------------|---------|-----------------------------------------------------|
-| id          | INT     | Primary Key                                         |
-| location_id | INT     | Link to Locations (Main Fridge, Basement Freezer)   |
-| category_id | INT     | Link to Categories (Fruits, Vegetables, Meat)       |
-| quantity    | DECIMAL | Current amount remaining                             |
-| expiry_date | DATE    | Critical for notification logic                     |
+### `items`
 
-2. **`locations`**
+| Field | Type | Description |
+|---|---|---|
+| id | INT | Primary key |
+| name | TEXT | Pantry item name |
+| quantity | DECIMAL | Current amount remaining |
+| expiry_date | DATE | Item expiry date |
+| location_name | TEXT | Optional storage place, such as fridge, freezer, or pantry shelf |
+| category_name | TEXT | Optional food group, such as dairy, frozen food, canned food, or vegetables |
 
-| Field | Type | Description                             |
-|-------| ---- |-----------------------------------------|
-| id    | INT | Primary Key                             |
-| name  | VARCHAR | "Main Fridge", "Basement Freezer", etc. |
+## Current Main Features
 
-3. **`categories`**
-
-| Field | Type | Description                                         |
-|-------| ---- |-----------------------------------------------------|
-| id    | INT | Primary Key                                         |
-| name  | VARCHAR | "Dairy", "Canned Goods", "Frozen Foods", etc. |
+- Add pantry items with quantity, expiry date, location, and category.
+- View all pantry items in a card-based Pantry page.
+- Display item status as Fresh, Soon, Expired, or Unknown.
+- Search pantry items by name, quantity, expiry date, location, or category.
+- Edit existing item details.
+- Delete items with confirmation.
+- View a dashboard summary on the Home page.
