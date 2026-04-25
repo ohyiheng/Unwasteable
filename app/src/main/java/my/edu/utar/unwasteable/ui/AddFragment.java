@@ -1,10 +1,13 @@
 package my.edu.utar.unwasteable.ui;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,12 +19,23 @@ import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URLEncoder;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import my.edu.utar.unwasteable.R;
 import my.edu.utar.unwasteable.data.Item;
@@ -36,6 +50,12 @@ public class AddFragment extends Fragment {
     private TextInputEditText editExpiryDate;
     private TextInputEditText editLocationName;
     private TextInputEditText editCategoryName;
+
+    private TextView tvFoodInfoResult;
+    private Button buttonCheckFoodInfo;
+
+    private final ExecutorService apiExecutor = Executors.newSingleThreadExecutor();
+    private final Handler mainHandler = new Handler(Looper.getMainLooper());
 
     @Nullable
     @Override
@@ -63,10 +83,15 @@ public class AddFragment extends Fragment {
         editExpiryDate = view.findViewById(R.id.edit_expiry_date);
         editLocationName = view.findViewById(R.id.edit_location_name);
         editCategoryName = view.findViewById(R.id.edit_category_name);
+
+        tvFoodInfoResult = view.findViewById(R.id.tv_food_info_result);
+        buttonCheckFoodInfo = view.findViewById(R.id.button_check_food_info);
     }
 
     private void setupActions(View view) {
         editExpiryDate.setOnClickListener(v -> showDatePicker(editExpiryDate));
+
+        buttonCheckFoodInfo.setOnClickListener(v -> checkFoodInfo());
 
         Button buttonSave = view.findViewById(R.id.button_save);
         buttonSave.setOnClickListener(v -> saveItem());
@@ -90,6 +115,123 @@ public class AddFragment extends Fragment {
         });
 
         datePicker.addOnDismissListener(dialog -> targetEditText.clearFocus());
+    }
+
+    private void checkFoodInfo() {
+        String itemName = getText(editName);
+
+        if (itemName.isEmpty()) {
+            editName.setError(getString(R.string.food_info_enter_name));
+            editName.requestFocus();
+            return;
+        }
+
+        editName.setError(null);
+        buttonCheckFoodInfo.setEnabled(false);
+        tvFoodInfoResult.setText(R.string.food_info_loading);
+
+        apiExecutor.execute(() -> {
+            String result;
+
+            try {
+                result = fetchFoodInfo(itemName);
+            } catch (Exception e) {
+                result = getString(R.string.food_info_error);
+            }
+
+            String finalResult = result;
+            mainHandler.post(() -> {
+                if (!isAdded()) {
+                    return;
+                }
+
+                tvFoodInfoResult.setText(finalResult);
+                buttonCheckFoodInfo.setEnabled(true);
+            });
+        });
+    }
+
+    private String fetchFoodInfo(String itemName) throws Exception {
+        String encodedTerm = URLEncoder.encode(itemName, StandardCharsets.UTF_8.toString());
+
+        String endpoint =
+                "https://world.openfoodfacts.org/cgi/search.pl"
+                        + "?search_terms=" + encodedTerm
+                        + "&search_simple=1"
+                        + "&action=process"
+                        + "&json=1"
+                        + "&page_size=1";
+
+        HttpURLConnection connection = null;
+
+        try {
+            URL url = new URL(endpoint);
+            connection = (HttpURLConnection) url.openConnection();
+
+            connection.setRequestMethod("GET");
+            connection.setConnectTimeout(8000);
+            connection.setReadTimeout(8000);
+            connection.setRequestProperty("User-Agent", "Unwasteable-Android-App");
+
+            int responseCode = connection.getResponseCode();
+
+            if (responseCode < 200 || responseCode >= 300) {
+                return getString(R.string.food_info_error);
+            }
+
+            BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(connection.getInputStream())
+            );
+
+            StringBuilder responseBuilder = new StringBuilder();
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                responseBuilder.append(line);
+            }
+
+            reader.close();
+
+            return parseFoodInfoResponse(responseBuilder.toString(), itemName);
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
+    }
+
+    private String parseFoodInfoResponse(String response, String itemName) throws Exception {
+        JSONObject root = new JSONObject(response);
+        JSONArray products = root.optJSONArray("products");
+
+        if (products == null || products.length() == 0) {
+            return getString(R.string.food_info_no_result, itemName);
+        }
+
+        JSONObject product = products.getJSONObject(0);
+
+        String productName = product.optString("product_name", "").trim();
+        String brands = product.optString("brands", "").trim();
+        String categories = product.optString("categories", "").trim();
+
+        if (productName.isEmpty()) {
+            productName = itemName;
+        }
+
+        if (brands.isEmpty()) {
+            brands = getString(R.string.food_info_not_available);
+        }
+
+        if (categories.isEmpty()) {
+            categories = getString(R.string.food_info_not_available);
+        }
+
+        return getString(
+                R.string.food_info_result,
+                productName,
+                brands,
+                categories
+        );
     }
 
     private void saveItem() {
@@ -224,7 +366,15 @@ public class AddFragment extends Fragment {
         editLocationName.setText("");
         editCategoryName.setText("");
 
+        tvFoodInfoResult.setText(R.string.food_info_initial);
+
         clearAllErrors();
         editName.requestFocus();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        apiExecutor.shutdownNow();
     }
 }
