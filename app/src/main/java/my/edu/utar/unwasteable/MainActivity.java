@@ -1,4 +1,4 @@
- package my.edu.utar.unwasteable;
+package my.edu.utar.unwasteable;
 
 import android.os.Bundle;
 

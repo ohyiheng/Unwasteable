@@ -17,23 +17,17 @@
     <string name="home_summary_add_title">Add</string>
     <string name="home_summary_add_subtitle">Create new records</string>
 
-    <string name="home_summary_categories_title">Categories</string>
-    <string name="home_summary_categories_subtitle">Manage food types</string>
-
-    <string name="home_summary_locations_title">Locations</string>
-    <string name="home_summary_locations_subtitle">Set storage places</string>
-
     <string name="add_title">Add Data</string>
-    <string name="add_subtitle">Create pantry records, storage locations, and categories.</string>
+    <string name="add_subtitle">Create pantry items with optional storage and category details.</string>
 
     <string name="item_form_title">New Item</string>
     <string name="item_form_subtitle">Enter basic pantry information below.</string>
 
-    <string name="location_form_title">New Location</string>
-    <string name="location_form_subtitle">Add a storage place such as fridge, freezer, or pantry shelf.</string>
+    <string name="location_form_title">Storage Location</string>
+    <string name="location_form_subtitle">Enter where this item is stored, such as fridge, freezer, or pantry shelf.</string>
 
-    <string name="category_form_title">New Category</string>
-    <string name="category_form_subtitle">Organise pantry items into useful food groups.</string>
+    <string name="category_form_title">Item Category</string>
+    <string name="category_form_subtitle">Enter a food group to make this item easier to organise.</string>
 
     <string name="save_details">Save Details</string>
 
