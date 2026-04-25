@@ -46,14 +46,14 @@ public class AddFragment extends Fragment {
     ) {
         View view = inflater.inflate(R.layout.fragment_add, container, false);
 
-        setupViewModels();
+        setupViewModel();
         bindViews(view);
         setupActions(view);
 
         return view;
     }
 
-    private void setupViewModels() {
+    private void setupViewModel() {
         itemViewModel = new ViewModelProvider(this).get(ItemViewModel.class);
     }
 
@@ -141,14 +141,14 @@ public class AddFragment extends Fragment {
     }
 
     private void insertNewItem(Item itemToSave) {
-        itemViewModel.insertWithLog(itemToSave);
+        itemViewModel.insert(itemToSave);
         clearSavedFields();
 
         Toast.makeText(requireContext(), R.string.toast_detail_saved, Toast.LENGTH_SHORT).show();
     }
 
     private void updateExistingItem(Item itemToSave, Item existingItem) {
-        itemViewModel.insertOrUpdateExistingWithLog(itemToSave, existingItem);
+        itemViewModel.insertOrUpdateExisting(itemToSave, existingItem);
         clearSavedFields();
 
         Toast.makeText(requireContext(), R.string.item_updated, Toast.LENGTH_SHORT).show();

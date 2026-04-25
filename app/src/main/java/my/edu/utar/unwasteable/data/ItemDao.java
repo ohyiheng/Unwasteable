@@ -17,14 +17,8 @@ public interface ItemDao {
     @Query("SELECT * FROM items")
     LiveData<List<Item>> getItems();
 
-    @Query("SELECT * FROM items WHERE id = :id")
-    Item getItemById(int id);
-
     @Query("SELECT * FROM items WHERE LOWER(TRIM(name)) = LOWER(TRIM(:name)) LIMIT 1")
     Item getItemByName(String name);
-
-    @Query("SELECT * FROM items WHERE expiry_date < :currentDate")
-    List<Item> getExpiredItems(String currentDate);
 
     @Update
     void update(Item item);

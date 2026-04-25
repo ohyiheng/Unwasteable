@@ -441,7 +441,7 @@ public class ItemListFragment extends Fragment {
         }
 
         item.quantity = item.quantity - 1;
-        itemViewModel.updateWithLog(item, "Used", -1);
+        itemViewModel.update(item);
 
         Toast.makeText(getContext(), R.string.quantity_updated, Toast.LENGTH_SHORT).show();
     }
@@ -452,7 +452,7 @@ public class ItemListFragment extends Fragment {
         }
 
         item.quantity = item.quantity + 1;
-        itemViewModel.updateWithLog(item, "Restocked", 1);
+        itemViewModel.update(item);
 
         Toast.makeText(getContext(), R.string.quantity_updated, Toast.LENGTH_SHORT).show();
     }
@@ -462,13 +462,12 @@ public class ItemListFragment extends Fragment {
                 .setTitle(R.string.quantity_depleted_title)
                 .setMessage(R.string.quantity_depleted_message)
                 .setNegativeButton(R.string.keep_item, (dialog, which) -> {
-                    double usedAmount = item.quantity;
                     item.quantity = 0;
-                    itemViewModel.updateWithLog(item, "Used", -usedAmount);
+                    itemViewModel.update(item);
                     Toast.makeText(getContext(), R.string.quantity_updated, Toast.LENGTH_SHORT).show();
                 })
                 .setPositiveButton(R.string.delete, (dialog, which) -> {
-                    itemViewModel.deleteWithLog(item);
+                    itemViewModel.delete(item);
                     Toast.makeText(getContext(), R.string.item_deleted, Toast.LENGTH_SHORT).show();
                 })
                 .show();
@@ -594,7 +593,7 @@ public class ItemListFragment extends Fragment {
         item.locationName = locationName.isEmpty() ? null : locationName;
         item.categoryName = categoryName.isEmpty() ? null : categoryName;
 
-        itemViewModel.updateWithLog(item, "Updated", 0);
+        itemViewModel.update(item);
         Toast.makeText(getContext(), R.string.item_updated, Toast.LENGTH_SHORT).show();
 
         return true;
@@ -636,7 +635,7 @@ public class ItemListFragment extends Fragment {
                 .setMessage(R.string.delete_item_message)
                 .setNegativeButton(R.string.cancel, null)
                 .setPositiveButton(R.string.delete, (dialog, which) -> {
-                    itemViewModel.deleteWithLog(item);
+                    itemViewModel.delete(item);
                     Toast.makeText(getContext(), R.string.item_deleted, Toast.LENGTH_SHORT).show();
                 })
                 .show();

@@ -11,32 +11,29 @@
     <string name="home_food_tip_title">Food-saving tip</string>
     <string name="home_food_tip_body">Store items properly and check expiry dates regularly to reduce avoidable waste.</string>
 
-    <string name="home_today_focus_title">Today’s Focus</string>
-    <string name="home_focus_expired_format">• Expired items: %1$d</string>
-    <string name="home_focus_soon_format">• Expiring soon: %1$d</string>
-    <string name="home_focus_low_stock_format">• Low stock items: %1$d</string>
-    <string name="home_focus_unknown_format">• Missing expiry dates: %1$d</string>
-
-    <string name="home_urgent_title">Urgent Items</string>
-    <string name="home_urgent_expired">Expired</string>
-    <string name="home_urgent_soon">Expiring soon</string>
-    <string name="home_urgent_low_stock">Low stock</string>
-    <string name="home_urgent_empty">No urgent pantry action is needed right now.</string>
-
-    <string name="home_storage_summary_title">Storage Snapshot</string>
-    <string name="home_category_summary_label">Top categories</string>
-    <string name="home_location_summary_label">Top locations</string>
-    <string name="home_summary_no_category">No category data yet</string>
-    <string name="home_summary_no_location">No location data yet</string>
-
-    <string name="home_recent_activity_title">Recent Activity</string>
-    <string name="home_recent_activity_empty">No activity recorded yet.</string>
-
     <string name="home_summary_items_title">Pantry Items</string>
     <string name="home_summary_items_subtitle">Track stored items</string>
 
-    <string name="home_summary_add_title">Add</string>
-    <string name="home_summary_add_subtitle">Create new records</string>
+    <string name="home_summary_soon_title">Expiring Soon</string>
+    <string name="home_summary_soon_subtitle">Within 3 days</string>
+
+    <string name="home_summary_expired_title">Expired</string>
+    <string name="home_summary_expired_subtitle">Needs attention</string>
+
+    <string name="home_summary_unknown_title">Unknown Date</string>
+    <string name="home_summary_unknown_subtitle">No expiry set</string>
+
+    <string name="home_tip_body_good">Your pantry looks organised. Keep checking expiry dates regularly to reduce avoidable food waste.</string>
+
+    <plurals name="home_tip_soon">
+        <item quantity="one">%1$d item will expire within 3 days. Consider using it first.</item>
+        <item quantity="other">%1$d items will expire within 3 days. Consider using them first.</item>
+    </plurals>
+
+    <plurals name="home_tip_expired">
+        <item quantity="one">%1$d item is expired. Review it before use.</item>
+        <item quantity="other">%1$d items are expired. Review them before use.</item>
+    </plurals>
 
     <string name="add_title">Add Data</string>
     <string name="add_subtitle">Create pantry items with optional storage and category details.</string>
@@ -57,12 +54,6 @@
     <string name="expiry_date_hint">Expiry Date</string>
     <string name="location_name_hint">Location Name</string>
     <string name="category_name_hint">Category Name</string>
-
-    <string name="item_quantity_format">Quantity: %1$s</string>
-    <string name="item_expiry_format">Expiry date: %1$s</string>
-    <string name="item_expiry_empty">Expiry date: -</string>
-    <string name="item_location_format">Location: %1$s</string>
-    <string name="item_category_format">Category: %1$s</string>
 
     <string name="item_quantity_label">Quantity</string>
     <string name="item_expiry_label">Expiry</string>
@@ -100,37 +91,6 @@
     <plurals name="pantry_item_count">
         <item quantity="one">%1$d item</item>
         <item quantity="other">%1$d items</item>
-    </plurals>
-
-    <string name="home_summary_soon_title">Expiring Soon</string>
-    <string name="home_summary_soon_subtitle">Within 3 days</string>
-
-    <string name="home_summary_expired_title">Expired</string>
-    <string name="home_summary_expired_subtitle">Needs attention</string>
-
-    <string name="home_summary_unknown_title">Unknown Date</string>
-    <string name="home_summary_unknown_subtitle">No expiry set</string>
-
-    <string name="home_tip_body_good">Your pantry looks organised. Keep checking expiry dates regularly to reduce avoidable food waste.</string>
-
-    <plurals name="home_tip_soon">
-        <item quantity="one">%1$d item will expire within 3 days. Consider using it first.</item>
-        <item quantity="other">%1$d items will expire within 3 days. Consider using them first.</item>
-    </plurals>
-
-    <plurals name="home_tip_expired">
-        <item quantity="one">%1$d item is expired. Review it before use.</item>
-        <item quantity="other">%1$d items are expired. Review them before use.</item>
-    </plurals>
-
-    <plurals name="home_tip_low_stock">
-        <item quantity="one">%1$d item is low in stock. Consider restocking it.</item>
-        <item quantity="other">%1$d items are low in stock. Consider restocking them.</item>
-    </plurals>
-
-    <plurals name="home_tip_unknown">
-        <item quantity="one">%1$d item has no expiry date. Add one to improve tracking.</item>
-        <item quantity="other">%1$d items have no expiry dates. Add them to improve tracking.</item>
     </plurals>
 
     <string name="delete_item">Delete item</string>
