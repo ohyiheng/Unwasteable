@@ -39,6 +39,7 @@ public class HomeFragment extends Fragment {
 
         bindViews(view);
         setupCardNavigation(view);
+        setupCtaNavigation(view);
         setupDashboardData();
 
         return view;
@@ -70,6 +71,23 @@ public class HomeFragment extends Fragment {
         );
     }
 
+    private void setupCtaNavigation(View view) {
+        view.findViewById(R.id.buttonHomeAddItem).setOnClickListener(v ->
+                selectBottomNavigationItem(R.id.add)
+        );
+
+        view.findViewById(R.id.buttonHomeViewPantry).setOnClickListener(v ->
+                openPantryWithFilter(ItemListFragment.FILTER_ALL)
+        );
+    }
+
+    private void selectBottomNavigationItem(int itemId) {
+        BottomNavigationView bottomNavigationView =
+                requireActivity().findViewById(R.id.bottom_navigation_view);
+
+        bottomNavigationView.setSelectedItemId(itemId);
+    }
+
     private void openPantryWithFilter(String filter) {
         Bundle args = new Bundle();
         args.putString(ItemListFragment.ARG_INITIAL_FILTER, filter);
@@ -79,10 +97,7 @@ public class HomeFragment extends Fragment {
                 args
         );
 
-        BottomNavigationView bottomNavigationView =
-                requireActivity().findViewById(R.id.bottom_navigation_view);
-
-        bottomNavigationView.setSelectedItemId(R.id.item_list);
+        selectBottomNavigationItem(R.id.item_list);
     }
 
     private void setupDashboardData() {

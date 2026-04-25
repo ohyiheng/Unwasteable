@@ -11,6 +11,11 @@
     <string name="home_food_tip_title">Food-saving tip</string>
     <string name="home_food_tip_body">Store items properly and check expiry dates regularly to reduce avoidable waste.</string>
 
+    <string name="home_cta_title">Ready to update your pantry?</string>
+    <string name="home_cta_body">Add new food records or review existing pantry items to keep your storage list accurate.</string>
+    <string name="home_cta_add">Add Item</string>
+    <string name="home_cta_view_pantry">View Pantry</string>
+
     <string name="home_summary_items_title">Pantry Items</string>
     <string name="home_summary_items_subtitle">Track stored items</string>
 
