@@ -28,6 +28,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -182,8 +183,37 @@ public class ItemListFragment extends Fragment {
             }
         }
 
+        sortByUrgency(filteredItems);
+
         itemAdapter.setLocalItems(filteredItems);
         updatePantryState(filteredItems);
+    }
+
+    private void sortByUrgency(List<Item> items) {
+        items.sort(
+                Comparator
+                        .comparingInt((Item item) -> getUrgencyRank(item.expiryDate))
+                        .thenComparing(item -> item.expiryDate == null ? LocalDate.MAX : item.expiryDate)
+                        .thenComparing(item -> item.name == null ? "" : item.name.toLowerCase(Locale.ROOT))
+        );
+    }
+
+    private int getUrgencyRank(LocalDate expiryDate) {
+        if (expiryDate == null) {
+            return 3;
+        }
+
+        LocalDate today = LocalDate.now();
+
+        if (expiryDate.isBefore(today)) {
+            return 0;
+        }
+
+        if (!expiryDate.isAfter(today.plusDays(3))) {
+            return 1;
+        }
+
+        return 2;
     }
 
     private String getSearchQuery() {
