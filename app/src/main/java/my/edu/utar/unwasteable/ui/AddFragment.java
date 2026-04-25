@@ -212,7 +212,7 @@ public class AddFragment extends Fragment {
 
         String productName = product.optString("product_name", "").trim();
         String brands = product.optString("brands", "").trim();
-        String categories = product.optString("categories", "").trim();
+        String categories = simplifyCategories(product.optString("categories", ""));
 
         if (productName.isEmpty()) {
             productName = itemName;
@@ -222,16 +222,45 @@ public class AddFragment extends Fragment {
             brands = getString(R.string.food_info_not_available);
         }
 
-        if (categories.isEmpty()) {
-            categories = getString(R.string.food_info_not_available);
-        }
-
         return getString(
                 R.string.food_info_result,
                 productName,
                 brands,
                 categories
         );
+    }
+
+    private String simplifyCategories(String rawCategories) {
+        if (rawCategories == null || rawCategories.trim().isEmpty()) {
+            return getString(R.string.food_info_not_available);
+        }
+
+        String[] parts = rawCategories.split(",");
+        StringBuilder builder = new StringBuilder();
+        int addedCount = 0;
+
+        for (String part : parts) {
+            String cleanedPart = part.trim();
+
+            if (cleanedPart.isEmpty()) {
+                continue;
+            }
+
+            if (addedCount > 0) {
+                builder.append(", ");
+            }
+
+            builder.append(cleanedPart);
+            addedCount++;
+
+            if (addedCount == 3) {
+                break;
+            }
+        }
+
+        return builder.length() > 0
+                ? builder.toString()
+                : getString(R.string.food_info_not_available);
     }
 
     private void saveItem() {
