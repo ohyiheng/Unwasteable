@@ -42,6 +42,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         private final TextView tvItemLocation;
         private final TextView tvItemCategory;
         private final TextView tvItemBadge;
+        private final TextView tvLowStockBadge;
         private final ImageButton buttonEditItem;
         private final ImageButton buttonDeleteItem;
         private final Button buttonUseOne;
@@ -55,6 +56,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             tvItemLocation = itemView.findViewById(R.id.tvItemLocation);
             tvItemCategory = itemView.findViewById(R.id.tvItemCategory);
             tvItemBadge = itemView.findViewById(R.id.tvItemBadge);
+            tvLowStockBadge = itemView.findViewById(R.id.tvLowStockBadge);
             buttonEditItem = itemView.findViewById(R.id.buttonEditItem);
             buttonDeleteItem = itemView.findViewById(R.id.buttonDeleteItem);
             buttonUseOne = itemView.findViewById(R.id.buttonUseOne);
@@ -92,6 +94,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         bindOptionalDetail(holder.tvItemCategory, currentItem.categoryName, R.string.item_category_format);
 
         bindBadge(holder.tvItemBadge, currentItem.expiryDate);
+        bindLowStockBadge(holder.tvLowStockBadge, currentItem.quantity);
 
         holder.buttonEditItem.setOnClickListener(v -> {
             if (listener != null) {
@@ -136,6 +139,15 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
         textView.setText(textView.getContext().getString(stringResId, value.trim()));
         textView.setVisibility(View.VISIBLE);
+    }
+
+    private void bindLowStockBadge(TextView badgeView, double quantity) {
+        if (quantity <= 1) {
+            badgeView.setVisibility(View.VISIBLE);
+            return;
+        }
+
+        badgeView.setVisibility(View.GONE);
     }
 
     private void bindBadge(TextView badgeView, LocalDate expiryDate) {

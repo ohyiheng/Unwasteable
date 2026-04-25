@@ -47,6 +47,7 @@
     <string name="badge_soon">Soon</string>
     <string name="badge_expired">Expired</string>
     <string name="badge_unknown">Unknown</string>
+    <string name="badge_low_stock">Low Stock</string>
 
     <string name="pantry_title">Pantry</string>
     <string name="pantry_subtitle">Track the food items you have stored.</string>
