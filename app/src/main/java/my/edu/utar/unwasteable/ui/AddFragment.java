@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.SimpleDateFormat;
@@ -109,10 +110,48 @@ public class AddFragment extends Fragment {
         itemToSave.locationName = locationName.isEmpty() ? null : locationName;
         itemToSave.categoryName = categoryName.isEmpty() ? null : categoryName;
 
+        checkDuplicateBeforeSaving(itemToSave);
+    }
+
+    private void checkDuplicateBeforeSaving(Item itemToSave) {
+        itemViewModel.findItemByName(itemToSave.name, existingItem -> {
+            if (!isAdded()) {
+                return;
+            }
+
+            if (existingItem == null) {
+                insertNewItem(itemToSave);
+                return;
+            }
+
+            showDuplicateItemDialog(itemToSave, existingItem);
+        });
+    }
+
+    private void showDuplicateItemDialog(Item itemToSave, Item existingItem) {
+        new MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.duplicate_item_title)
+                .setMessage(getString(R.string.duplicate_item_message, existingItem.name))
+                .setNegativeButton(R.string.cancel, null)
+                .setNeutralButton(R.string.add_anyway, (dialog, which) -> insertNewItem(itemToSave))
+                .setPositiveButton(R.string.update_existing, (dialog, which) ->
+                        updateExistingItem(itemToSave, existingItem)
+                )
+                .show();
+    }
+
+    private void insertNewItem(Item itemToSave) {
         itemViewModel.insert(itemToSave);
         clearSavedFields();
 
         Toast.makeText(requireContext(), R.string.toast_detail_saved, Toast.LENGTH_SHORT).show();
+    }
+
+    private void updateExistingItem(Item itemToSave, Item existingItem) {
+        itemViewModel.insertOrUpdateExisting(itemToSave, existingItem);
+        clearSavedFields();
+
+        Toast.makeText(requireContext(), R.string.item_updated, Toast.LENGTH_SHORT).show();
     }
 
     private Item buildItemOrShowError(String name, String quantityText, String expiryText) {
