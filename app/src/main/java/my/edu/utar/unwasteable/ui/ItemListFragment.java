@@ -126,6 +126,16 @@ public class ItemListFragment extends Fragment {
             public void onDelete(Item item) {
                 showDeleteConfirmation(item);
             }
+
+            @Override
+            public void onUseOne(Item item) {
+                useOneItem(item);
+            }
+
+            @Override
+            public void onRestockOne(Item item) {
+                restockOneItem(item);
+            }
         });
 
         recyclerView.setAdapter(itemAdapter);
@@ -367,6 +377,49 @@ public class ItemListFragment extends Fragment {
         buttonAddFirstItem.setVisibility(View.GONE);
     }
 
+    private void useOneItem(Item item) {
+        if (item == null) {
+            return;
+        }
+
+        if (item.quantity <= 1) {
+            showQuantityDepletedDialog(item);
+            return;
+        }
+
+        item.quantity = item.quantity - 1;
+        itemViewModel.update(item);
+
+        Toast.makeText(getContext(), R.string.quantity_updated, Toast.LENGTH_SHORT).show();
+    }
+
+    private void restockOneItem(Item item) {
+        if (item == null) {
+            return;
+        }
+
+        item.quantity = item.quantity + 1;
+        itemViewModel.update(item);
+
+        Toast.makeText(getContext(), R.string.quantity_updated, Toast.LENGTH_SHORT).show();
+    }
+
+    private void showQuantityDepletedDialog(Item item) {
+        new MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.quantity_depleted_title)
+                .setMessage(R.string.quantity_depleted_message)
+                .setNegativeButton(R.string.keep_item, (dialog, which) -> {
+                    item.quantity = 0;
+                    itemViewModel.update(item);
+                    Toast.makeText(getContext(), R.string.quantity_updated, Toast.LENGTH_SHORT).show();
+                })
+                .setPositiveButton(R.string.delete, (dialog, which) -> {
+                    itemViewModel.delete(item);
+                    Toast.makeText(getContext(), R.string.item_deleted, Toast.LENGTH_SHORT).show();
+                })
+                .show();
+    }
+
     private void showEditItemDialog(Item item) {
         if (item == null) {
             return;
@@ -463,8 +516,8 @@ public class ItemListFragment extends Fragment {
             return false;
         }
 
-        if (quantity <= 0) {
-            editQuantity.setError(getString(R.string.error_quantity_positive));
+        if (quantity < 0) {
+            editQuantity.setError(getString(R.string.error_quantity_not_negative));
             editQuantity.requestFocus();
             return false;
         }

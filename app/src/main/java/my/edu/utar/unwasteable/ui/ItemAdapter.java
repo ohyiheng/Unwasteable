@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -23,6 +24,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     public interface OnItemActionListener {
         void onEdit(Item item);
         void onDelete(Item item);
+        void onUseOne(Item item);
+        void onRestockOne(Item item);
     }
 
     private List<Item> localItems = new ArrayList<>();
@@ -41,6 +44,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         private final TextView tvItemBadge;
         private final ImageButton buttonEditItem;
         private final ImageButton buttonDeleteItem;
+        private final Button buttonUseOne;
+        private final Button buttonRestockOne;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -52,6 +57,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             tvItemBadge = itemView.findViewById(R.id.tvItemBadge);
             buttonEditItem = itemView.findViewById(R.id.buttonEditItem);
             buttonDeleteItem = itemView.findViewById(R.id.buttonDeleteItem);
+            buttonUseOne = itemView.findViewById(R.id.buttonUseOne);
+            buttonRestockOne = itemView.findViewById(R.id.buttonRestockOne);
         }
     }
 
@@ -95,6 +102,18 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         holder.buttonDeleteItem.setOnClickListener(v -> {
             if (listener != null) {
                 listener.onDelete(currentItem);
+            }
+        });
+
+        holder.buttonUseOne.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onUseOne(currentItem);
+            }
+        });
+
+        holder.buttonRestockOne.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onRestockOne(currentItem);
             }
         });
     }

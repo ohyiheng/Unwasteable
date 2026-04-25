@@ -111,10 +111,18 @@
     <string name="update_existing">Update Existing</string>
     <string name="add_anyway">Add Anyway</string>
 
+    <string name="use_one">Use One</string>
+    <string name="restock_one">Restock +1</string>
+    <string name="quantity_updated">Quantity updated</string>
+    <string name="quantity_depleted_title">Quantity depleted</string>
+    <string name="quantity_depleted_message">This item will reach 0 quantity. You can keep it in the pantry or delete it now.</string>
+    <string name="keep_item">Keep Item</string>
+
     <string name="error_item_name_required">Item name is required</string>
     <string name="error_quantity_required">Quantity is required</string>
     <string name="error_invalid_quantity">Enter a valid quantity</string>
     <string name="error_quantity_positive">Quantity must be greater than 0</string>
+    <string name="error_quantity_not_negative">Quantity cannot be negative</string>
     <string name="error_invalid_date_format">Use date format yyyy-MM-dd</string>
 
     <string name="toast_detail_saved">Detail saved</string>
