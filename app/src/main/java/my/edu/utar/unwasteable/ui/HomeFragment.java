@@ -10,8 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import androidx.navigation.Navigation;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -53,17 +52,28 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupCardNavigation(View view) {
-        View.OnClickListener openPantry = v -> {
-            BottomNavigationView bottomNavigationView =
-                    requireActivity().findViewById(R.id.bottom_navigation_view);
+        view.findViewById(R.id.cardHomePantry).setOnClickListener(v ->
+                openPantryWithFilter(view, ItemListFragment.FILTER_ALL)
+        );
 
-            bottomNavigationView.setSelectedItemId(R.id.item_list);
-        };
+        view.findViewById(R.id.cardHomeSoon).setOnClickListener(v ->
+                openPantryWithFilter(view, ItemListFragment.FILTER_SOON)
+        );
 
-        view.findViewById(R.id.cardHomePantry).setOnClickListener(openPantry);
-        view.findViewById(R.id.cardHomeSoon).setOnClickListener(openPantry);
-        view.findViewById(R.id.cardHomeExpired).setOnClickListener(openPantry);
-        view.findViewById(R.id.cardHomeUnknown).setOnClickListener(openPantry);
+        view.findViewById(R.id.cardHomeExpired).setOnClickListener(v ->
+                openPantryWithFilter(view, ItemListFragment.FILTER_EXPIRED)
+        );
+
+        view.findViewById(R.id.cardHomeUnknown).setOnClickListener(v ->
+                openPantryWithFilter(view, ItemListFragment.FILTER_UNKNOWN)
+        );
+    }
+
+    private void openPantryWithFilter(View view, String filter) {
+        Bundle args = new Bundle();
+        args.putString(ItemListFragment.ARG_INITIAL_FILTER, filter);
+
+        Navigation.findNavController(view).navigate(R.id.item_list, args);
     }
 
     private void setupDashboardData() {

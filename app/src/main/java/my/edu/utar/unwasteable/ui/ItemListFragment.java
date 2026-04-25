@@ -40,11 +40,13 @@ import my.edu.utar.unwasteable.viewmodel.ItemViewModel;
 
 public class ItemListFragment extends Fragment {
 
-    private static final String FILTER_ALL = "all";
-    private static final String FILTER_FRESH = "fresh";
-    private static final String FILTER_SOON = "soon";
-    private static final String FILTER_EXPIRED = "expired";
-    private static final String FILTER_UNKNOWN = "unknown";
+    public static final String ARG_INITIAL_FILTER = "initial_filter";
+
+    public static final String FILTER_ALL = "all";
+    public static final String FILTER_FRESH = "fresh";
+    public static final String FILTER_SOON = "soon";
+    public static final String FILTER_EXPIRED = "expired";
+    public static final String FILTER_UNKNOWN = "unknown";
 
     private ItemViewModel itemViewModel;
     private ItemAdapter itemAdapter;
@@ -77,6 +79,8 @@ public class ItemListFragment extends Fragment {
         buttonAddFirstItem = view.findViewById(R.id.button_add_first_item);
         editSearchItems = view.findViewById(R.id.edit_search_items);
 
+        selectedFilter = getInitialFilter();
+
         buttonAddFirstItem.setOnClickListener(v ->
                 Navigation.findNavController(view).navigate(R.id.add)
         );
@@ -87,6 +91,25 @@ public class ItemListFragment extends Fragment {
         setupViewModel();
 
         return view;
+    }
+
+    private String getInitialFilter() {
+        Bundle args = getArguments();
+
+        if (args == null) {
+            return FILTER_ALL;
+        }
+
+        String filter = args.getString(ARG_INITIAL_FILTER, FILTER_ALL);
+
+        if (FILTER_FRESH.equals(filter)
+                || FILTER_SOON.equals(filter)
+                || FILTER_EXPIRED.equals(filter)
+                || FILTER_UNKNOWN.equals(filter)) {
+            return filter;
+        }
+
+        return FILTER_ALL;
     }
 
     private void setupRecyclerView() {
@@ -134,6 +157,8 @@ public class ItemListFragment extends Fragment {
         Chip chipExpired = view.findViewById(R.id.chip_filter_expired);
         Chip chipUnknown = view.findViewById(R.id.chip_filter_unknown);
 
+        setInitialCheckedChip(chipAll, chipFresh, chipSoon, chipExpired, chipUnknown);
+
         chipAll.setOnClickListener(v -> {
             selectedFilter = FILTER_ALL;
             applyFilters();
@@ -158,6 +183,20 @@ public class ItemListFragment extends Fragment {
             selectedFilter = FILTER_UNKNOWN;
             applyFilters();
         });
+    }
+
+    private void setInitialCheckedChip(
+            Chip chipAll,
+            Chip chipFresh,
+            Chip chipSoon,
+            Chip chipExpired,
+            Chip chipUnknown
+    ) {
+        chipAll.setChecked(FILTER_ALL.equals(selectedFilter));
+        chipFresh.setChecked(FILTER_FRESH.equals(selectedFilter));
+        chipSoon.setChecked(FILTER_SOON.equals(selectedFilter));
+        chipExpired.setChecked(FILTER_EXPIRED.equals(selectedFilter));
+        chipUnknown.setChecked(FILTER_UNKNOWN.equals(selectedFilter));
     }
 
     private void setupViewModel() {
