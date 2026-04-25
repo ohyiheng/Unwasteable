@@ -6,54 +6,72 @@
     android:layout_height="match_parent"
     android:background="@color/background_main"
     android:orientation="vertical"
-    android:padding="20dp"
+    android:paddingStart="20dp"
+    android:paddingTop="20dp"
+    android:paddingEnd="20dp"
+    android:paddingBottom="12dp"
     tools:context=".ui.ItemListFragment">
 
-    <LinearLayout
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        app:cardBackgroundColor="@color/green_primary"
+        app:cardCornerRadius="22dp"
+        app:cardElevation="0dp"
+        app:cardUseCompatPadding="false">
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="18dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="18dp"
+            android:paddingBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvPantryTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pantry_title"
+                    android:textColor="@color/white"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvPantrySubtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:lineSpacingExtra="2dp"
+                    android:text="@string/pantry_subtitle"
+                    android:textColor="@color/white"
+                    android:textSize="13sp" />
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/tvPantryTitle"
+                android:id="@+id/tvPantryItemCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/pantry_title"
-                android:textColor="@color/text_primary"
-                android:textSize="24sp"
+                android:layout_marginStart="12dp"
+                android:background="@drawable/bg_status_fresh"
+                android:paddingStart="12dp"
+                android:paddingTop="6dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="6dp"
+                android:text="@string/pantry_count_default"
+                android:textColor="@color/green_primary_dark"
+                android:textSize="12sp"
                 android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tvPantrySubtitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:text="@string/pantry_subtitle"
-                android:textColor="@color/text_secondary"
-                android:textSize="14sp" />
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/tvPantryItemCount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_status_unknown"
-            android:paddingStart="12dp"
-            android:paddingTop="6dp"
-            android:paddingEnd="12dp"
-            android:paddingBottom="6dp"
-            android:text="@string/pantry_count_default"
-            android:textColor="@color/text_secondary"
-            android:textSize="12sp"
-            android:textStyle="bold" />
-    </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/searchInputLayout"
@@ -61,9 +79,18 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:hint="@string/pantry_search_hint"
+        app:boxBackgroundColor="@color/surface_card"
         app:boxBackgroundMode="outline"
+        app:boxCornerRadiusBottomEnd="16dp"
+        app:boxCornerRadiusBottomStart="16dp"
+        app:boxCornerRadiusTopEnd="16dp"
+        app:boxCornerRadiusTopStart="16dp"
+        app:boxStrokeColor="@color/green_primary"
         app:endIconMode="clear_text"
-        app:startIconDrawable="@android:drawable/ic_menu_search">
+        app:endIconTint="@color/green_primary_dark"
+        app:hintTextColor="@color/green_primary_dark"
+        app:startIconDrawable="@android:drawable/ic_menu_search"
+        app:startIconTint="@color/green_primary_dark">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_search_items"
@@ -72,13 +99,15 @@
             android:inputType="text"
             android:paddingTop="14dp"
             android:paddingBottom="14dp"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:textColor="@color/text_primary"
+            android:textColorHint="@color/text_secondary" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="12dp"
         android:overScrollMode="never"
         android:scrollbars="none">
 
@@ -96,35 +125,60 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:text="@string/pantry_filter_all" />
+                android:text="@string/pantry_filter_all"
+                android:textColor="@color/chip_filter_text"
+                app:checkedIconTint="@color/chip_filter_text"
+                app:chipBackgroundColor="@color/chip_filter_background"
+                app:chipStrokeColor="@color/chip_filter_stroke"
+                app:chipStrokeWidth="1dp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_filter_fresh"
                 style="@style/Widget.Material3.Chip.Filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/pantry_filter_fresh" />
+                android:text="@string/pantry_filter_fresh"
+                android:textColor="@color/chip_filter_text"
+                app:checkedIconTint="@color/chip_filter_text"
+                app:chipBackgroundColor="@color/chip_filter_background"
+                app:chipStrokeColor="@color/chip_filter_stroke"
+                app:chipStrokeWidth="1dp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_filter_soon"
                 style="@style/Widget.Material3.Chip.Filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/pantry_filter_soon" />
+                android:text="@string/pantry_filter_soon"
+                android:textColor="@color/chip_filter_text"
+                app:checkedIconTint="@color/chip_filter_text"
+                app:chipBackgroundColor="@color/chip_filter_background"
+                app:chipStrokeColor="@color/chip_filter_stroke"
+                app:chipStrokeWidth="1dp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_filter_expired"
                 style="@style/Widget.Material3.Chip.Filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/pantry_filter_expired" />
+                android:text="@string/pantry_filter_expired"
+                android:textColor="@color/chip_filter_text"
+                app:checkedIconTint="@color/chip_filter_text"
+                app:chipBackgroundColor="@color/chip_filter_background"
+                app:chipStrokeColor="@color/chip_filter_stroke"
+                app:chipStrokeWidth="1dp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_filter_unknown"
                 style="@style/Widget.Material3.Chip.Filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/pantry_filter_unknown" />
+                android:text="@string/pantry_filter_unknown"
+                android:textColor="@color/chip_filter_text"
+                app:checkedIconTint="@color/chip_filter_text"
+                app:chipBackgroundColor="@color/chip_filter_background"
+                app:chipStrokeColor="@color/chip_filter_stroke"
+                app:chipStrokeWidth="1dp" />
 
         </com.google.android.material.chip.ChipGroup>
     </HorizontalScrollView>
@@ -180,12 +234,18 @@
             android:textColor="@color/text_secondary"
             android:textSize="14sp" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_add_first_item"
             android:layout_width="match_parent"
             android:layout_height="52dp"
             android:layout_marginTop="24dp"
-            android:text="@string/pantry_empty_button" />
+            android:text="@string/pantry_empty_button"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:backgroundTint="@color/green_primary_dark"
+            app:cornerRadius="18dp" />
 
     </LinearLayout>
 

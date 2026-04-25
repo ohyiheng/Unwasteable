@@ -11,6 +11,11 @@
     <string name="home_food_tip_title">Food-saving tip</string>
     <string name="home_food_tip_body">Store items properly and check expiry dates regularly to reduce avoidable waste.</string>
 
+    <string name="home_today_focus_title">Today’s Focus</string>
+    <string name="home_today_focus_expired">• Use or review expired items first.</string>
+    <string name="home_today_focus_soon">• Prioritise items expiring within 3 days.</string>
+    <string name="home_today_focus_unknown">• Add expiry dates for items marked as unknown.</string>
+
     <string name="home_summary_items_title">Pantry Items</string>
     <string name="home_summary_items_subtitle">Track stored items</string>
 
