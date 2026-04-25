@@ -52,6 +52,17 @@
     <string name="category_form_title">Item Category</string>
     <string name="category_form_subtitle">Enter a food group to make this item easier to organise.</string>
 
+    <string name="food_info_lookup_title">Food Info Lookup</string>
+    <string name="food_info_lookup_subtitle">Use the item name to retrieve basic food information from an external food database.</string>
+    <string name="check_food_info">Check Food Info</string>
+    <string name="food_info_initial">Enter an item name, then tap Check Food Info.</string>
+    <string name="food_info_enter_name">Enter an item name first</string>
+    <string name="food_info_loading">Checking food information...</string>
+    <string name="food_info_no_result">No external food information found for “%1$s”.</string>
+    <string name="food_info_error">Unable to retrieve food information. Check your internet connection and try again.</string>
+    <string name="food_info_not_available">Not available</string>
+    <string name="food_info_result">Product: %1$s\nBrand: %2$s\nCategory: %3$s\nSource: Open Food Facts API</string>
+
     <string name="save_details">Save Details</string>
 
     <string name="item_name_hint">Item Name</string>
