@@ -57,6 +57,3 @@ app/src/main/java/my/edu/utar/unwasteable/
     └── ItemViewModel.java
 ```
 
-## Notes
-
-The application stores pantry data locally. It does not require an external server or network connection for its core pantry tracking features.
