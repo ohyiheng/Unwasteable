@@ -43,6 +43,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         private final TextView tvItemCategory;
         private final TextView tvItemBadge;
         private final TextView tvLowStockBadge;
+
+        private final View rowItemLocation;
+        private final View rowItemCategory;
+
         private final ImageButton buttonEditItem;
         private final ImageButton buttonDeleteItem;
         private final Button buttonUseOne;
@@ -57,6 +61,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             tvItemCategory = itemView.findViewById(R.id.tvItemCategory);
             tvItemBadge = itemView.findViewById(R.id.tvItemBadge);
             tvLowStockBadge = itemView.findViewById(R.id.tvLowStockBadge);
+
+            rowItemLocation = itemView.findViewById(R.id.rowItemLocation);
+            rowItemCategory = itemView.findViewById(R.id.rowItemCategory);
+
             buttonEditItem = itemView.findViewById(R.id.buttonEditItem);
             buttonDeleteItem = itemView.findViewById(R.id.buttonDeleteItem);
             buttonUseOne = itemView.findViewById(R.id.buttonUseOne);
@@ -78,20 +86,16 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         Context context = holder.itemView.getContext();
 
         holder.tvItemName.setText(currentItem.name);
-        holder.tvItemQuantity.setText(
-                context.getString(R.string.item_quantity_format, formatQuantity(currentItem.quantity))
-        );
+        holder.tvItemQuantity.setText(formatQuantity(currentItem.quantity));
 
         if (currentItem.expiryDate == null) {
-            holder.tvItemExpiry.setText(context.getString(R.string.item_expiry_empty));
+            holder.tvItemExpiry.setText(context.getString(R.string.item_not_set));
         } else {
-            holder.tvItemExpiry.setText(
-                    context.getString(R.string.item_expiry_format, currentItem.expiryDate.toString())
-            );
+            holder.tvItemExpiry.setText(currentItem.expiryDate.toString());
         }
 
-        bindOptionalDetail(holder.tvItemLocation, currentItem.locationName, R.string.item_location_format);
-        bindOptionalDetail(holder.tvItemCategory, currentItem.categoryName, R.string.item_category_format);
+        bindOptionalDetail(holder.rowItemLocation, holder.tvItemLocation, currentItem.locationName);
+        bindOptionalDetail(holder.rowItemCategory, holder.tvItemCategory, currentItem.categoryName);
 
         bindBadge(holder.tvItemBadge, currentItem.expiryDate);
         bindLowStockBadge(holder.tvLowStockBadge, currentItem.quantity);
@@ -131,14 +135,14 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         notifyDataSetChanged();
     }
 
-    private void bindOptionalDetail(TextView textView, String value, int stringResId) {
+    private void bindOptionalDetail(View rowView, TextView valueView, String value) {
         if (value == null || value.trim().isEmpty()) {
-            textView.setVisibility(View.GONE);
+            rowView.setVisibility(View.GONE);
             return;
         }
 
-        textView.setText(textView.getContext().getString(stringResId, value.trim()));
-        textView.setVisibility(View.VISIBLE);
+        valueView.setText(value.trim());
+        rowView.setVisibility(View.VISIBLE);
     }
 
     private void bindLowStockBadge(TextView badgeView, double quantity) {
@@ -199,6 +203,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         if (quantity == (int) quantity) {
             return String.valueOf((int) quantity);
         }
+
         return String.valueOf(quantity);
     }
 }

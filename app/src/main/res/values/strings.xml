@@ -43,6 +43,12 @@
     <string name="item_location_format">Location: %1$s</string>
     <string name="item_category_format">Category: %1$s</string>
 
+    <string name="item_quantity_label">Quantity</string>
+    <string name="item_expiry_label">Expiry</string>
+    <string name="item_location_label">Location</string>
+    <string name="item_category_label">Category</string>
+    <string name="item_not_set">Not set</string>
+
     <string name="badge_fresh">Fresh</string>
     <string name="badge_soon">Soon</string>
     <string name="badge_expired">Expired</string>
@@ -112,8 +118,8 @@
     <string name="update_existing">Update Existing</string>
     <string name="add_anyway">Add Anyway</string>
 
-    <string name="use_one">Use One</string>
-    <string name="restock_one">Restock +1</string>
+    <string name="use_one">Use</string>
+    <string name="restock_one">Add</string>
     <string name="quantity_updated">Quantity updated</string>
     <string name="quantity_depleted_title">Quantity depleted</string>
     <string name="quantity_depleted_message">This item will reach 0 quantity. You can keep it in the pantry or delete it now.</string>
