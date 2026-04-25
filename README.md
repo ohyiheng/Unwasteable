@@ -28,6 +28,35 @@ Unwasteable is an Android pantry management application designed to help users t
 - Delete items with confirmation.
 - View a Home dashboard summary for total pantry items, expiring soon items, expired items, and items without expiry dates.
 - Navigate from Home dashboard cards directly to the matching Pantry filter.
+- Retrieve basic food information from the Open Food Facts API through the Food Info Lookup section.
+- Use a custom launcher icon for the application.
+
+## External Endpoint Integration
+
+The application connects to the Open Food Facts API in the Add page. Users can enter an item name and tap Check Food Info. The app sends an HTTP GET request to the Open Food Facts endpoint and displays the returned product name, brand, category, and source.
+
+Endpoint used:
+
+```text
+https://world.openfoodfacts.org/cgi/search.pl
+```
+
+The app includes the Android INTERNET permission in `AndroidManifest.xml` to allow the external API request.
+
+## Custom Launcher Icon
+
+The application uses a custom launcher icon stored as:
+
+```text
+app/src/main/res/drawable/unwasteable_icon.jpeg
+```
+
+The launcher icon is configured through:
+
+```text
+app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml
+```
 
 ## Technology Stack
 
@@ -37,6 +66,7 @@ Unwasteable is an Android pantry management application designed to help users t
 - Material Components
 - Android Navigation Component
 - Bottom Navigation
+- Open Food Facts API
 
 ## Project Structure
 
@@ -56,4 +86,3 @@ app/src/main/java/my/edu/utar/unwasteable/
 └── viewmodel/
     └── ItemViewModel.java
 ```
-
